@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#161515" />
+  <meta name="description" content="Valkyrie Store — descubrí productos y consultá por WhatsApp." />
+  <title>Valkyrie Store | Catálogo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Valkyrie Store, inicio"><span class="brand-icon">V</span><span>VALKYRIE <em>STORE</em></span></a>
+    <nav aria-label="Menú principal"><a href="#catalogo">Catálogo</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a></nav>
+    <a class="header-cta" href="#catalogo">Explorar <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-content">
+        <span class="eyebrow"><span class="dot"></span> CATÁLOGO ONLINE</span>
+        <h1>Encontrá eso que <i>te encanta.</i></h1>
+        <p>Tu próxima elección favorita está acá. Explorá nuestro catálogo y consultanos por WhatsApp, fácil y directo.</p>
+        <a href="#catalogo" class="btn primary">Ver productos <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true"><span class="hero-orbit orbit-a"></span><span class="hero-orbit orbit-b"></span><span class="hero-monogram">V</span><span class="hero-art-caption">VALKYRIE<br>STORE — 2026</span></div>
+    </section>
+    <div class="benefits" aria-label="Beneficios"><span>✦ Elegí lo que te gusta</span><span>✦ Consultá disponibilidad</span><span>✦ Coordiná tu compra</span></div>
+    <section class="catalog section" id="catalogo">
+      <div class="section-heading"><div><span class="overline">NUESTRA SELECCIÓN</span><h2>Explorá el catálogo<span class="accent">.</span></h2></div><p>Descubrí los productos disponibles y consultá directamente por WhatsApp.</p></div>
+      <div class="catalog-tools"><div id="filters" class="filters" role="group" aria-label="Filtrar productos"></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Buscar productos..." aria-label="Buscar productos" /></label></div>
+      <p id="result-count" class="result-count" aria-live="polite"></p>
+      <div id="product-grid" class="product-grid"></div>
+      <div id="empty-state" class="empty-state" hidden>No encontramos productos con esos filtros. Probá otra búsqueda.</div>
+    </section>
+    <section class="about section" id="nosotros"><div><span class="overline">SOBRE NOSOTROS</span><h2>Elegido con estilo.<br><i>Compartido con vos.</i></h2></div><p>En Valkyrie Store queremos que encontrar lo que buscás sea simple. Mirá nuestros productos, consultá disponibilidad y coordiná tu compra de manera personalizada.</p></section>
+    <section class="contact section" id="contacto"><span class="overline">¿TE GUSTÓ ALGO?</span><h2>Hablemos de tu<br><i>próxima compra.</i></h2><p>Escribinos para consultar productos, talles y disponibilidad.</p><a id="general-whatsapp" class="btn light disabled-link" href="#contacto" aria-disabled="true">Configurar WhatsApp <span aria-hidden="true">↗</span></a><small id="contact-note">Próximamente: contacto por WhatsApp.</small></section>
+  </main>
+  <footer><a href="#inicio" class="footer-brand">VALKYRIE <span>STORE</span></a><span>© <span id="year"></span> Valkyrie Store</span><span>Catálogo online · Consultas por mensaje</span></footer>
+  <script src="script.js" defer></script>
+</body>
+</html>

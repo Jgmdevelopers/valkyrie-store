@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ejemplo-1",
+    "nombre": "Producto de ejemplo 01",
+    "categoria": "Ropa",
+    "descripcion": "Reemplazar por descripción real, talle y estado del producto.",
+    "precio": null,
+    "imagen": "",
+    "disponible": true,
+    "destacado": true
+  },
+  {
+    "id": "ejemplo-2",
+    "nombre": "Producto de ejemplo 02",
+    "categoria": "Calzado",
+    "descripcion": "Agregá los detalles y una foto real del artículo.",
+    "precio": null,
+    "imagen": "",
+    "disponible": true,
+    "destacado": false
+  },
+  {
+    "id": "ejemplo-3",
+    "nombre": "Combo de ejemplo 03",
+    "categoria": "Combos",
+    "descripcion": "Especificá las prendas incluidas y sus características.",
+    "precio": null,
+    "imagen": "",
+    "disponible": true,
+    "destacado": false
+  }
+]
