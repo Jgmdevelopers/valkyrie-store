@@ -115,17 +115,7 @@ input:focus-visible {
   background: var(--accent);
 }
 
-.hero:before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.15;
-  background-image:
-    repeating-linear-gradient(0deg, transparent 0 50px, #929292 51px),
-    repeating-linear-gradient(90deg, transparent 0 50px, #929292 51px);
-  background-size: 52px 52px;
-  mask-image: linear-gradient(to right, transparent, #000000);
-}
+
 .hero-content {
   padding: 105px 20px 110px max(7vw, 22px);
   position: relative;
@@ -840,17 +830,6 @@ input:focus-visible {
   display: block;
 }
 
-.hero::before {
-  opacity: 0.075;
-  background-image: repeating-linear-gradient(
-    135deg,
-    transparent 0 48px,
-    #aaa 49px,
-    #aaa 50px,
-    transparent 51px 96px
-  );
-  mask-image: linear-gradient(90deg, transparent 15%, #000 100%);
-}
 .hero-content {
   padding-top: 115px;
   padding-bottom: 115px;
