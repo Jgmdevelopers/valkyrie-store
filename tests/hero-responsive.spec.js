@@ -39,6 +39,37 @@ for (const resolucion of resoluciones) {
       };
     });
 
+    const tipografia = await page
+      .locator(".hero.hero-full h1")
+      .evaluate((elemento) => {
+        const css = getComputedStyle(elemento);
+
+        return {
+          fontFamily: css.fontFamily,
+          fontWeight: css.fontWeight,
+          maxWidth: css.maxWidth,
+          textTransform: css.textTransform,
+        };
+      });
+
+    expect(tipografia.fontFamily).toContain("Cinzel");
+    expect(tipografia.fontWeight).toBe("700");
+    expect(tipografia.maxWidth).toBe("750px");
+    expect(tipografia.textTransform).toBe("uppercase");
+
+    const subtitulo = await page
+      .locator(".hero.hero-full h1 i")
+      .evaluate((elemento) => {
+        const css = getComputedStyle(elemento);
+
+        return {
+          display: css.display,
+          fontWeight: css.fontWeight,
+        };
+      });
+
+expect(subtitulo.display).toBe("inline-block");
+expect(subtitulo.fontWeight).toBe("400");
     expect(estilos.alignSelf).toBe("center");
     expect(estilos.position).toBe("relative");
     expect(estilos.zIndex).toBe("2");
