@@ -1192,8 +1192,7 @@ input:focus-visible {
 }
 .hero-photo {
   min-height: 570px;
-  background: #141414 url("assets/valquiria-rock-gotica.webp") center 30% /
-    cover no-repeat;
+  background: #141414;
   isolation: isolate;
 }
 .hero-photo:before {
