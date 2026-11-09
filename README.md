@@ -74,3 +74,63 @@ Fotografías reales, identidad de marca aprobada, carga de inventario, política
 - El catálogo y la lógica de WhatsApp permanecen igual. Fotos y productos continúan siendo ejemplos.
 
 **Actualizar desde v0.4:** crear rama `feature/identidad-valquiria-femenina`, reemplazar `index.html` y `styles.css`, y conservar `script.js` y `products.json` si ya tienen datos reales.
+
+
+## v0.6 — Identidad gothic metal
+
+- Paleta monocromática: negro, grafito, plata y blanco.
+- Portada ilustrada original con valquiria rockera y estilo gótico. El arte es conceptual y no representa un producto a la venta.
+- Categorías vinculadas con filtros funcionales.
+- Sin carrito ni pago en línea: el catálogo es para consultas.
+- No publicar un número de WhatsApp sin autorización de Pamela.
+- Los productos cargados son demos: reemplazar por fichas y fotos reales antes de lanzar.
+
+Para validar: `python -m http.server 8000`, abrir `http://localhost:8000`, probar búsqueda, categorías, diálogo y enlace compartible.
+
+## v0.7 — Catálogo preparado para ventas
+
+- Filtro **Solo disponibles** y ordenamiento (destacados, nombre, precio ascendente y descendente).
+- Ficha con **variantes opcionales** (talles, colores o medidas), identificadas por nombre y disponibilidad.
+- Consulta de WhatsApp incluyendo nombre, código, opción elegida y enlace compartible.
+- Un producto agotado o una variante agotada no genera enlace de consulta.
+- No se modificaron `products.json` ni las fotografías para evitar sobrescribir productos reales.
+
+### Formato opcional de un producto con variantes
+
+Esta estructura es **un ejemplo de formato**, no mercadería real:
+
+```json
+{
+  "id": "ejemplo-remera-01",
+  "nombre": "Nombre del producto real",
+  "categoria": "Ropa nueva",
+  "descripcion": "Descripción verificada con la vendedora",
+  "precio": null,
+  "imagen": "assets/foto-propia.webp",
+  "disponible": true,
+  "destacado": false,
+  "material": "Completar con composición real",
+  "medidas": "Completar con medidas reales",
+  "variantes": [
+    {"nombre": "Talle M", "stock": 2},
+    {"nombre": "Talle L", "stock": 0},
+    {"nombre": "Talle XL", "disponible": false}
+  ]
+}
+```
+
+**Notas de inventario:** `stock` es informativo y manual. Cuando no está definido, el sistema se basa en `disponible`. El stock de variantes NO se descuenta por consultas y NO está sincronizado con las redes. Antes de cobrar o confirmar una venta, Pamela debe verificar existencias. Si un producto tiene variantes, marcar manualmente `disponible: false` al retirarlo del catálogo o completar el stock de cada opción. Para evitar inconsistencias, se recomienda mantener ambos campos actualizados.
+
+### Pruebas manuales
+
+1. Abrir `http://localhost:8000` mediante `python -m http.server 8000`.
+2. Probar filtros de categoría, buscador, **Solo disponibles** y los cuatro ordenamientos.
+3. Abrir ficha de producto con y sin `variantes`.
+4. Con datos de prueba, verificar que la variante con `stock: 0` no se pueda seleccionar.
+5. Compartir una ficha, abrir el enlace en otra pestaña y verificar el producto correcto.
+6. Comprobar diseño en un teléfono o con herramientas de desarrollo del navegador.
+7. Verificar que el botón de WhatsApp no se active hasta configurar el número autorizado.
+
+### Instalación desde v0.6
+
+Trabajar en la rama `feature/identidad-valquiria-femenina`. Luego de guardar un commit de seguridad, reemplazar **solo** `index.html`, `styles.css` y `script.js`; conservar los productos y las fotos. No copiar archivos de ejemplo sobre un catálogo real. Probar, revisar `git diff` y registrar un commit de funcionalidad.
