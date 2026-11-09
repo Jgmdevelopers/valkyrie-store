@@ -1222,10 +1222,7 @@ input:focus-visible {
   align-items: stretch;
 }
 
-/* Contenido a la derecha */
 .hero-content {
-  min-width: 0;
-  align-self: center;
   padding: 60px clamp(28px, 4vw, 76px);
   position: relative;
   z-index: 2;
@@ -1314,6 +1311,8 @@ input:focus-visible {
 .hero.hero-full .hero-content {
   position: relative;
   z-index: 2;
+  min-width: 0;
+  align-self: center;
   max-width: 720px;
   padding: 120px max(7vw, 24px) 110px;
 }
