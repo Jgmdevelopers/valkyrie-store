@@ -896,6 +896,7 @@ input:focus-visible {
   padding-top: 115px;
   padding-bottom: 115px;
 }
+
 .hero h1 {
   font-family: "Cinzel", Georgia, serif;
   font-weight: 500;
@@ -903,24 +904,25 @@ input:focus-visible {
   line-height: 1.2;
   letter-spacing: -1px;
   text-transform: none;
-  max-width: 750px;
 }
+
 .hero h1 i {
-  display: inline-block;
   color: #dadada;
   font-style: normal;
-  font-weight: 400;
 }
+
 .hero p {
   font-size: 15px;
   max-width: 520px;
 }
+
 .eyebrow,
 .overline {
   font-weight: 500;
   letter-spacing: 2.5px;
   color: #c6c6c6;
 }
+
 .dot {
   width: 6px;
   height: 6px;
@@ -1336,11 +1338,14 @@ input:focus-visible {
   text-transform: uppercase;
   color: #f7f4f1;
   text-shadow: 0 3px 18px rgba(0, 0, 0, 0.45);
+  max-width: 750px;
 }
 
 .hero.hero-full h1 i {
   color: #d7d2cc;
   font-style: normal;
+  display: inline-block;
+  font-weight: 400;
 }
 
 .hero.hero-full p {
