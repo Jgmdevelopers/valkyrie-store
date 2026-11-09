@@ -1,32 +1,5 @@
 [
-  {
-    "id": "ejemplo-1",
-    "nombre": "Producto de ejemplo 01",
-    "categoria": "Ropa",
-    "descripcion": "Reemplazar por descripción real, talle y estado del producto.",
-    "precio": null,
-    "imagen": "",
-    "disponible": true,
-    "destacado": true
-  },
-  {
-    "id": "ejemplo-2",
-    "nombre": "Producto de ejemplo 02",
-    "categoria": "Calzado",
-    "descripcion": "Agregá los detalles y una foto real del artículo.",
-    "precio": null,
-    "imagen": "",
-    "disponible": true,
-    "destacado": false
-  },
-  {
-    "id": "ejemplo-3",
-    "nombre": "Combo de ejemplo 03",
-    "categoria": "Combos",
-    "descripcion": "Especificá las prendas incluidas y sus características.",
-    "precio": null,
-    "imagen": "",
-    "disponible": true,
-    "destacado": false
-  }
+  {"id":"demo-remera","nombre":"Remera alternativa · Demo","categoria":"Ropa nueva","descripcion":"Producto demostrativo. Reemplazar por modelo, talles y fotos reales.","precio":null,"imagen":"","disponible":true,"destacado":true},
+  {"id":"demo-accesorio","nombre":"Accesorio · Demo","categoria":"Accesorios","descripcion":"Producto demostrativo. Agregar materiales, medidas y disponibilidad real.","precio":null,"imagen":"","disponible":true,"destacado":false},
+  {"id":"demo-varios","nombre":"Selección especial · Demo","categoria":"Productos variados","descripcion":"Producto demostrativo. Cargar foto, características y precio real.","precio":null,"imagen":"","disponible":true,"destacado":false}
 ]
