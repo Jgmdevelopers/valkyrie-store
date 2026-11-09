@@ -210,65 +210,13 @@ input:focus-visible {
   transform: translateY(-2px);
   filter: brightness(1.1);
 }
-.hero-art {
-  position: relative;
-  display: grid;
-  place-items: center;
-  min-height: 460px;
-  overflow: hidden;
-  background: radial-gradient(circle, #272727 0%, #181818 43%, transparent 70%);
-}
-.hero-art:before,
-.hero-art:after {
-  content: "";
-  position: absolute;
-  width: 54%;
-  height: 100%;
-  top: -12%;
-  border-left: 2px solid #5a5a5a;
-  border-right: 2px solid #5a5a5a;
-  transform: rotate(30deg);
-  opacity: 0.2;
-}
-.hero-art:after {
-  transform: rotate(-30deg);
-}
-.hero-monogram {
-  font:
-    900 clamp(300px, 36vw, 570px)/1 "Barlow Condensed",
-    Impact,
-    sans-serif;
-  color: #d1d1d1;
-  opacity: 0.92;
-  text-shadow:
-    15px 16px 1px #3f3f3f,
-    24px 24px 45px #000000;
-  z-index: 1;
-  transform: skew(-7deg);
-}
-.hero-orbit {
-  position: absolute;
-  border: 1px solid #7373733f;
-  border-radius: 50%;
-  width: 70%;
-  aspect-ratio: 1;
-  transform: rotate(-25deg) scaleX(0.65);
-}
-.orbit-b {
-  transform: rotate(35deg) scaleX(0.65);
-  width: 83%;
-}
-.hero-art-caption {
-  position: absolute;
-  right: 8%;
-  bottom: 35px;
-  text-align: right;
-  font-size: 11px;
-  letter-spacing: 3px;
-  line-height: 1.7;
-  color: #aaaaaa;
-  z-index: 2;
-}
+
+
+
+
+
+
+
 .benefits {
   display: flex;
   justify-content: center;
@@ -657,9 +605,7 @@ footer {
     padding-top: 90px;
     padding-bottom: 90px;
   }
-  .hero-art {
-    min-height: 400px;
-  }
+
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -715,17 +661,9 @@ footer {
   .hero p {
     font-size: 14px;
   }
-  .hero-art {
-    min-height: 240px;
-    max-height: 300px;
-  }
-  .hero-monogram {
-    font-size: 300px;
-  }
-  .hero-art-caption {
-    font-size: 9px;
-    bottom: 18px;
-  }
+
+
+
   .benefits {
     gap: 12px 22px;
     padding: 17px;
@@ -843,25 +781,10 @@ body {
     #080808 100%
   );
 }
-.hero-art {
-  background: radial-gradient(circle, #343434 0%, #1c1c1c 44%, #080808 78%);
-}
-.hero-art::before,
-.hero-art::after {
-  border-color: #b8b8b8;
-}
-.hero-monogram {
-  color: #ededed;
-  text-shadow:
-    15px 16px 1px #515151,
-    24px 24px 45px #000;
-}
-.hero-art-caption,
-.overline,
-.eyebrow,
-.product-category,
-.detail-availability,
-.search span {
+
+
+
+.overline, .eyebrow, .product-category, .detail-availability, .search span{
   color: #d7d7d7;
 }
 .hero h1 i,
@@ -869,9 +792,7 @@ body {
 .contact h2 i {
   color: #d0d0d0;
 }
-.hero-orbit {
-  border-color: #89898950;
-}
+
 .benefits {
   background: #202020;
   border-color: #484848;
@@ -1012,47 +933,13 @@ input:focus-visible {
   border: 1px solid #eee;
   background: transparent;
 }
-.hero-art {
-  background: radial-gradient(
-    circle at 50% 50%,
-    #303030 0%,
-    #141414 44%,
-    transparent 75%
-  );
-}
-.hero-art::before,
-.hero-art::after {
-  border: 0;
-  width: 75%;
-  height: 75%;
-  top: 12%;
-  left: 12%;
-  outline: 1px solid #777;
-  transform: rotate(45deg);
-  opacity: 0.15;
-}
-.hero-art::after {
-  transform: rotate(15deg);
-  opacity: 0.13;
-}
-.hero-monogram {
-  width: min(55%, 350px);
-  filter: drop-shadow(0px 25px 18px #000);
-  transform: none;
-  opacity: 0.9;
-  text-shadow: none;
-}
-.hero-monogram .valkyrie-mark {
-  stroke: none;
-  filter: drop-shadow(0 0 22px #8885);
-}
-.hero-orbit {
-  border-color: #bcbcbc36;
-}
-.hero-art-caption {
-  letter-spacing: 2.1px;
-  font-family: "Cinzel", Georgia, serif;
-}
+
+
+
+
+
+
+
 .benefits {
   background: #151515;
   font-family: "Cinzel", Georgia, serif;
@@ -1138,12 +1025,8 @@ input:focus-visible {
     line-height: 1.25;
     letter-spacing: -0.4px;
   }
-  .hero-art {
-    min-height: 270px;
-  }
-  .hero-monogram {
-    width: 170px;
-  }
+
+
   .section-heading h2,
   .about h2,
   .contact h2 {
@@ -1177,42 +1060,10 @@ input:focus-visible {
 .hero h1 i {
   color: #d1d1d1;
 }
-.hero-photo {
-  min-height: 570px;
-  background: #141414;
-  isolation: isolate;
-}
-.hero-photo:before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    #090909 0%,
-    transparent 22%,
-    transparent 72%,
-    #08080888 100%
-  );
-  opacity: 1;
-  border: 0;
-  outline: 0;
-  transform: none;
-  width: auto;
-  height: auto;
-  top: 0;
-  left: 0;
-}
-.hero-photo:after {
-  display: none;
-}
-.hero-photo .hero-art-caption {
-  right: 7%;
-  bottom: 25px;
-  color: white;
-  font-family: "Cinzel", Georgia, serif;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 8px black;
-}
+
+
+
+
 .categories {
   padding-top: 64px;
   padding-bottom: 28px;
@@ -1278,11 +1129,7 @@ input:focus-visible {
     display: flex;
     flex-direction: column-reverse;
   }
-  .hero-photo {
-    width: 100%;
-    min-height: 350px;
-    background-position: center 22%;
-  }
+
   .hero-content {
     padding: 47px 22px 62px;
   }
@@ -1306,9 +1153,7 @@ input:focus-visible {
   .category-tile {
     min-height: 110px;
   }
-  .hero-photo {
-    min-height: 310px;
-  }
+
 }
 
 /* v0.7 — Catálogo comercial: herramientas y variantes */
@@ -1396,21 +1241,10 @@ input:focus-visible {
 
 /* Evita que el efecto decorativo ocupe
    una celda de la grilla */
-.hero-glow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
+
 
 /* Imagen a la izquierda */
-.hero-art.hero-photo {
-  grid-column: 1;
-  grid-row: 1;
-  min-height: 570px;
-  background-position: center 25%;
-  background-size: cover;
-}
+
 
 /* Contenido a la derecha */
 .hero-content {
@@ -1442,11 +1276,7 @@ input:focus-visible {
     min-height: 0;
   }
 
-  .hero-art.hero-photo {
-    width: 100%;
-    min-height: 350px;
-    background-position: center 22%;
-  }
+
 
   .hero-content {
     width: 100%;
@@ -1459,9 +1289,7 @@ input:focus-visible {
 }
 
 @media (max-width: 480px) {
-  .hero-art.hero-photo {
-    min-height: 310px;
-  }
+
 
   .hero-content {
     padding: 35px 20px 48px;
@@ -1491,12 +1319,12 @@ input:focus-visible {
       rgba(5, 5, 5, 0.28) 58%,
       rgba(5, 5, 5, 0.55) 100%
     ),
-    url('assets/valquirias-negras-patagonia-dorada.png') center center / cover no-repeat;
+    url("assets/valquirias-negras-patagonia-dorada.png") center center / cover no-repeat;
   border-bottom: 1px solid #2e2e2e;
 }
 
 .hero.hero-full::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background:
@@ -1531,7 +1359,7 @@ input:focus-visible {
 
 .hero.hero-full h1 {
   margin: 22px 0 22px;
-  font-family: 'Cinzel', Georgia, serif;
+  font-family: "Cinzel", Georgia, serif;
   font-weight: 700;
   font-size: clamp(42px, 6vw, 92px);
   line-height: 1.02;
@@ -1586,7 +1414,7 @@ input:focus-visible {
   right: max(4vw, 18px);
   bottom: 24px;
   z-index: 2;
-  font-family: 'Cinzel', Georgia, serif;
+  font-family: "Cinzel", Georgia, serif;
   font-size: 11px;
   letter-spacing: 2.4px;
   color: rgba(255, 255, 255, 0.78);
@@ -1595,10 +1423,7 @@ input:focus-visible {
 }
 
 /* Ocultamos piezas del hero anterior si aún quedaran */
-.hero.hero-full .hero-art,
-.hero.hero-full .hero-glow {
-  display: none;
-}
+
 
 @media (max-width: 900px) {
   .hero.hero-full {
