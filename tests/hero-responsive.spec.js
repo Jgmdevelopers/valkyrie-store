@@ -149,6 +149,31 @@ for (const resolucion of resoluciones) {
     expect(["flex-start", "flow-start"]).toContain(estilosHero.justifyContent);
     expect(estilosHero.borderBottomWidth).toBe("1px");
 
+    // Capa decorativa
+    const decoracion = await hero.evaluate((elemento) => {
+      const css = getComputedStyle(elemento, "::before");
+
+      return {
+        content: css.content,
+        position: css.position,
+        inset: css.inset,
+        opacity: css.opacity,
+        maskImage: css.maskImage,
+        backgroundSize: css.backgroundSize,
+        pointerEvents: css.pointerEvents,
+        zIndex: css.zIndex,
+      };
+    });
+
+    expect(decoracion.content).toBe('""');
+    expect(decoracion.position).toBe("absolute");
+    expect(decoracion.inset).toBe("0px");
+    expect(decoracion.opacity).toBe("0.075");
+    expect(decoracion.maskImage).toContain("linear-gradient");
+    expect(decoracion.backgroundSize).toBe("auto, auto");
+    expect(decoracion.pointerEvents).toBe("none");
+    expect(decoracion.zIndex).toBe("0");
+
     console.log(`${resolucion.nombre}: OK`, {
       viewport: resolucion.ancho,
       padding: estilos.padding,
