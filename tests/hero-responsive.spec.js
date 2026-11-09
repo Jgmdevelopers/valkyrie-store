@@ -129,6 +129,26 @@ for (const resolucion of resoluciones) {
 
     expect(desbordamiento).toBe(false);
 
+    const estilosHero = await hero.evaluate((elemento) => {
+      const css = getComputedStyle(elemento);
+
+      return {
+        display: css.display,
+        position: css.position,
+        color: css.color,
+        overflow: css.overflow,
+        justifyContent: css.justifyContent,
+        borderBottomWidth: css.borderBottomWidth,
+      };
+    });
+
+    expect(estilosHero.display).toBe("flex");
+    expect(estilosHero.position).toBe("relative");
+    expect(estilosHero.color).toBe("rgb(255, 255, 255)");
+    expect(estilosHero.overflow).toBe("hidden");
+    expect(["flex-start", "flow-start"]).toContain(estilosHero.justifyContent);
+    expect(estilosHero.borderBottomWidth).toBe("1px");
+
     console.log(`${resolucion.nombre}: OK`, {
       viewport: resolucion.ancho,
       padding: estilos.padding,
