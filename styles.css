@@ -1222,15 +1222,8 @@ input:focus-visible {
   align-items: stretch;
 }
 
-/* Evita que el efecto decorativo ocupe
-   una celda de la grilla */
-
-/* Imagen a la izquierda */
-
 /* Contenido a la derecha */
 .hero-content {
-  grid-column: 2;
-  grid-row: 1;
   min-width: 0;
   align-self: center;
   padding: 60px clamp(28px, 4vw, 76px);
