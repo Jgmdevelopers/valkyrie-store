@@ -211,12 +211,6 @@ input:focus-visible {
   filter: brightness(1.1);
 }
 
-
-
-
-
-
-
 .benefits {
   display: flex;
   justify-content: center;
@@ -662,8 +656,6 @@ footer {
     font-size: 14px;
   }
 
-
-
   .benefits {
     gap: 12px 22px;
     padding: 17px;
@@ -782,9 +774,11 @@ body {
   );
 }
 
-
-
-.overline, .eyebrow, .product-category, .detail-availability, .search span{
+.overline,
+.eyebrow,
+.product-category,
+.detail-availability,
+.search span {
   color: #d7d7d7;
 }
 .hero h1 i,
@@ -934,12 +928,6 @@ input:focus-visible {
   background: transparent;
 }
 
-
-
-
-
-
-
 .benefits {
   background: #151515;
   font-family: "Cinzel", Georgia, serif;
@@ -1026,7 +1014,6 @@ input:focus-visible {
     letter-spacing: -0.4px;
   }
 
-
   .section-heading h2,
   .about h2,
   .contact h2 {
@@ -1060,9 +1047,6 @@ input:focus-visible {
 .hero h1 i {
   color: #d1d1d1;
 }
-
-
-
 
 .categories {
   padding-top: 64px;
@@ -1153,7 +1137,6 @@ input:focus-visible {
   .category-tile {
     min-height: 110px;
   }
-
 }
 
 /* v0.7 — Catálogo comercial: herramientas y variantes */
@@ -1242,9 +1225,7 @@ input:focus-visible {
 /* Evita que el efecto decorativo ocupe
    una celda de la grilla */
 
-
 /* Imagen a la izquierda */
-
 
 /* Contenido a la derecha */
 .hero-content {
@@ -1276,8 +1257,6 @@ input:focus-visible {
     min-height: 0;
   }
 
-
-
   .hero-content {
     width: 100%;
     padding: 42px 24px 58px;
@@ -1289,8 +1268,6 @@ input:focus-visible {
 }
 
 @media (max-width: 480px) {
-
-
   .hero-content {
     padding: 35px 20px 48px;
   }
@@ -1319,7 +1296,8 @@ input:focus-visible {
       rgba(5, 5, 5, 0.28) 58%,
       rgba(5, 5, 5, 0.55) 100%
     ),
-    url("assets/valquirias-negras-patagonia-dorada.png") center center / cover no-repeat;
+    url("assets/valquirias-negras-patagonia-dorada.png") center center / cover
+      no-repeat;
   border-bottom: 1px solid #2e2e2e;
 }
 
@@ -1329,16 +1307,15 @@ input:focus-visible {
   inset: 0;
   background:
     linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.42)),
-    radial-gradient(circle at 70% 45%, rgba(255, 210, 140, 0.10), transparent 35%);
+    radial-gradient(
+      circle at 70% 45%,
+      rgba(255, 210, 140, 0.1),
+      transparent 35%
+    );
   pointer-events: none;
   z-index: 0;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+  opacity: 0.075;
+  mask-image: linear-gradient(90deg, transparent 15%, #000 100%);
 }
 
 .hero.hero-full .hero-content {
@@ -1423,7 +1400,6 @@ input:focus-visible {
 }
 
 /* Ocultamos piezas del hero anterior si aún quedaran */
-
 
 @media (max-width: 900px) {
   .hero.hero-full {
