@@ -115,7 +115,6 @@ input:focus-visible {
   background: var(--accent);
 }
 
-
 .hero-content {
   padding: 105px 20px 110px max(7vw, 22px);
   position: relative;
@@ -559,10 +558,27 @@ footer {
   margin: 0;
 }
 @media (max-width: 900px) {
-  .topbar nav {
-    gap: 15px;
+  .topbar {
+    flex-wrap: wrap;
+    column-gap: 16px;
+    row-gap: 14px;
   }
 
+  .topbar nav {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: center;
+    gap: 24px;
+  }
+  .brand {
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .header-cta {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
   .hero-content {
     padding-top: 90px;
     padding-bottom: 90px;
