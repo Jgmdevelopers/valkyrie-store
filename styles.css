@@ -1485,4 +1485,192 @@ input:focus-visible {
     font-size: clamp(32px, 8vw, 44px);
   }
 }
+/* ==========================================
+   v0.9 — Hero editorial full width
+   Valquirias negras sobre la Patagonia dorada
+   ========================================== */
 
+.hero.hero-full {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 5, 5, 0.82) 0%,
+      rgba(5, 5, 5, 0.58) 32%,
+      rgba(5, 5, 5, 0.28) 58%,
+      rgba(5, 5, 5, 0.55) 100%
+    ),
+    url('assets/valquirias-negras-patagonia-dorada.png') center center / cover no-repeat;
+  border-bottom: 1px solid #2e2e2e;
+}
+
+.hero.hero-full::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.42)),
+    radial-gradient(circle at 70% 45%, rgba(255, 210, 140, 0.10), transparent 35%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero.hero-full .hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  padding: 120px max(7vw, 24px) 110px;
+}
+
+.hero.hero-full .eyebrow {
+  color: #d8d0c8;
+  letter-spacing: 3px;
+}
+
+.hero.hero-full .dot {
+  border-color: #f3e8db;
+}
+
+.hero.hero-full h1 {
+  margin: 22px 0 22px;
+  font-family: 'Cinzel', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(42px, 6vw, 92px);
+  line-height: 1.02;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  color: #f7f4f1;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.45);
+}
+
+.hero.hero-full h1 i {
+  color: #d7d2cc;
+  font-style: normal;
+}
+
+.hero.hero-full p {
+  max-width: 560px;
+  color: #e2ddd7;
+  font-size: 16px;
+  line-height: 1.85;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.btn.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 17px 23px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  color: #f3f3f3;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  backdrop-filter: blur(2px);
+}
+
+.btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
+}
+
+.hero-caption {
+  position: absolute;
+  right: max(4vw, 18px);
+  bottom: 24px;
+  z-index: 2;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 11px;
+  letter-spacing: 2.4px;
+  color: rgba(255, 255, 255, 0.78);
+  text-align: right;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* Ocultamos piezas del hero anterior si aún quedaran */
+.hero.hero-full .hero-art,
+.hero.hero-full .hero-glow {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .hero.hero-full {
+    min-height: 78vh;
+    background-position: center center;
+  }
+
+  .hero.hero-full .hero-content {
+    max-width: 100%;
+    padding: 95px 24px 90px;
+  }
+
+  .hero.hero-full h1 {
+    font-size: clamp(38px, 8vw, 68px);
+  }
+
+  .hero.hero-full p {
+    font-size: 15px;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero.hero-full {
+    min-height: auto;
+    align-items: flex-end;
+    background-position: center center;
+  }
+
+  .hero.hero-full .hero-content {
+    padding: 78px 20px 56px;
+  }
+
+  .hero.hero-full h1 {
+    font-size: clamp(32px, 10vw, 50px);
+    line-height: 1.05;
+  }
+
+  .hero.hero-full p {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn,
+  .hero-actions .btn.secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-caption {
+    right: 20px;
+    bottom: 16px;
+    font-size: 9px;
+    letter-spacing: 1.8px;
+  }
+}
