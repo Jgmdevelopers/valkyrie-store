@@ -1,0 +1,24 @@
+{
+  "name": "valkyrie-store",
+  "version": "1.0.0",
+  "description": "Landing page responsive en HTML, CSS y JavaScript, sin backend ni dependencias de compilación. Los productos actuales son **ejemplos ficticios**, no artículos reales ni precios de Pamela.",
+  "main": "script.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:responsive": "playwright test tests/hero-responsive.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jgmdevelopers/valkyrie-store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jgmdevelopers/valkyrie-store/issues"
+  },
+  "homepage": "https://github.com/Jgmdevelopers/valkyrie-store#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.65.0"
+  }
+}
