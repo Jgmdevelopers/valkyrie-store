@@ -114,21 +114,7 @@ input:focus-visible {
 .header-cta:hover {
   background: var(--accent);
 }
-.hero {
-  min-height: 620px;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  background: radial-gradient(
-    circle at 75% 45%,
-    #1c1c1c 0%,
-    #0d0d0d 55%,
-    #080808 100%
-  );
-  color: #ffffff;
-  overflow: hidden;
-  position: relative;
-  border-bottom: 1px solid #333333;
-}
+
 .hero:before {
   content: "";
   position: absolute;
@@ -586,9 +572,7 @@ footer {
   .topbar nav {
     gap: 15px;
   }
-  .hero {
-    grid-template-columns: 1fr 0.8fr;
-  }
+
   .hero-content {
     padding-top: 90px;
     padding-bottom: 90px;
@@ -635,13 +619,11 @@ footer {
     font-size: 10px;
     padding: 10px;
   }
-  .hero {
-    display: block;
-    min-height: auto;
-  }
+
   .hero-content {
     padding: 80px 22px 58px;
   }
+
   .hero h1 {
     font-size: clamp(67px, 18vw, 105px);
     margin: 22px 0;
@@ -658,6 +640,7 @@ footer {
   .section-heading {
     display: block;
   }
+
   .section-heading p {
     max-width: none;
     margin-top: 20px;
@@ -755,14 +738,6 @@ body {
 .brand-icon {
   color: #fff;
   border-color: #777;
-}
-.hero {
-  background: radial-gradient(
-    circle at 78% 42%,
-    #2e2e2e 0%,
-    #111 55%,
-    #080808 100%
-  );
 }
 
 .overline,
@@ -864,14 +839,7 @@ input:focus-visible {
   color: #f0f0f0;
   display: block;
 }
-.hero {
-  background: radial-gradient(
-    ellipse at 78% 50%,
-    #272727 0%,
-    #0d0d0d 55%,
-    #050505 100%
-  );
-}
+
 .hero::before {
   opacity: 0.075;
   background-image: repeating-linear-gradient(
@@ -1015,11 +983,6 @@ input:focus-visible {
   }
 }
 
-.hero {
-  grid-template-columns: 1.05fr 0.95fr;
-  min-height: 570px;
-  background: linear-gradient(100deg, #060606 30%, #202020 100%);
-}
 .hero-content {
   padding-top: 100px;
   padding-bottom: 90px;
@@ -1097,11 +1060,6 @@ input:focus-visible {
   letter-spacing: 1.3px;
 }
 @media (max-width: 750px) {
-  .hero {
-    display: flex;
-    flex-direction: column-reverse;
-  }
-
   .hero-content {
     padding: 47px 22px 62px;
   }
@@ -1200,16 +1158,6 @@ input:focus-visible {
    VALKYRIE STORE v0.8
    Corrección del hero y diseño responsive
    ========================================== */
-
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  min-height: 570px;
-  position: relative;
-  overflow: hidden;
-  align-items: stretch;
-}
-
 .hero-content {
   padding: 60px clamp(28px, 4vw, 76px);
   position: relative;
@@ -1224,12 +1172,6 @@ input:focus-visible {
 
 /* Tablets y celulares */
 @media (max-width: 750px) {
-  .hero {
-    display: flex;
-    flex-direction: column-reverse;
-    min-height: 0;
-  }
-
   .hero-content {
     width: 100%;
     padding: 42px 24px 58px;
@@ -1261,6 +1203,7 @@ input:focus-visible {
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
+  color: #ffffff;
   background:
     linear-gradient(
       90deg,
