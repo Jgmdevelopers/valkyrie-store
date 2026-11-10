@@ -16,7 +16,7 @@ Abrir http://localhost:8000. No abrir `index.html` directamente como archivo: el
 
 1. Editar `products.json` para reemplazar los ejemplos por productos reales. `precio` acepta un número en ARS (por ejemplo `25000`) o `null` para «Consultar precio».
 2. Copiar fotografías a `assets/` y referenciarlas en el campo `imagen`, por ejemplo `assets/remera.jpg`. Procurar imágenes propias y optimizadas.
-3. En `script.js`, reemplazar `const WHATSAPP = '';` por el número que Pamela autorice publicar, formato internacional **549...**, sin +, espacios ni guiones.
+3. Para habilitar las consultas comerciales, configurar el campo whatsapp en config/tienda.json con el número autorizado por Pamela, en formato internacional, sin +, espacios ni guiones. Mientras permanezca vacío, los enlaces de consulta estarán deshabilitados.
 4. Cambiar la descripción comercial y datos de contacto en `index.html`. Nunca colocar datos personales sin autorización.
 5. Publicar en un hosting estático que permita el uso comercial planificado, previa revisión de sus condiciones vigentes. El repositorio puede alojarse en GitHub sin habilitar GitHub Pages como hosting comercial.
 

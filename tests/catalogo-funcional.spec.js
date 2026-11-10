@@ -15,6 +15,10 @@ const archivos = {
     "src/catalogo/validar-productos.js",
     "text/javascript; charset=utf-8",
   ],
+  "/config/tienda.json": [
+    "config/tienda.json",
+    "application/json; charset=utf-8",
+  ],
 };
 
 let servidor;
@@ -182,6 +186,20 @@ async function cargarCatalogoDePrueba(page) {
   await page.reload();
 
   await expect(page.locator("#result-count")).toHaveText("4 productos");
+}
+
+async function cargarConfiguracionDePrueba(page, configuracion) {
+  await page.route("**/config/tienda.json", async (ruta) => {
+    await ruta.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(configuracion),
+    });
+  });
+
+  await page.reload();
+
+  await expect(page.locator("#result-count")).toHaveText("3 productos");
 }
 
 test("Excluye productos agotados y deshabilitados", async ({ page }) => {
@@ -406,4 +424,155 @@ test("Muestra el fallback cuando la fotografía falla", async ({ page }) => {
 
   await expect(media).toHaveClass(/no-photo/);
   await expect(media.locator("img")).toHaveCount(0);
+});
+
+test("WhatsApp permanece deshabilitado con número inválido", async ({
+  page,
+}) => {
+  await cargarConfiguracionDePrueba(page, {
+    moneda: "ARS",
+    whatsapp: "549-telefono-invalido",
+  });
+
+  const enlaceGeneral = page.locator("#general-whatsapp");
+
+  await expect(enlaceGeneral).toHaveAttribute("aria-disabled", "true");
+
+  await page
+    .locator("#product-grid .product")
+    .first()
+    .getByRole("button", { name: "Ver producto" })
+    .click();
+
+  const enlaceProducto = page.locator("#detail-content .detail-actions a");
+
+  await expect(enlaceProducto).toHaveAttribute("aria-disabled", "true");
+  await expect(enlaceProducto).not.toHaveAttribute("href", /.+/);
+});
+
+test("WhatsApp habilita los enlaces con configuración válida", async ({
+  page,
+}) => {
+  const numeroPrueba = "5491112345678";
+
+  await cargarConfiguracionDePrueba(page, {
+    moneda: "ARS",
+    whatsapp: numeroPrueba,
+  });
+
+  const enlaceGeneral = page.locator("#general-whatsapp");
+
+  await expect(enlaceGeneral).not.toHaveAttribute("aria-disabled", "true");
+  await expect(enlaceGeneral).toHaveAttribute(
+    "href",
+    new RegExp(`^https://wa\\.me/${numeroPrueba}\\?text=`),
+  );
+
+  await expect(enlaceGeneral).toHaveAttribute("target", "_blank");
+  await expect(enlaceGeneral).toHaveAttribute("rel", /noopener noreferrer/);
+});
+
+test("La consulta de WhatsApp incluye el nombre y código del producto", async ({
+  page,
+}) => {
+  await cargarConfiguracionDePrueba(page, {
+    moneda: "ARS",
+    whatsapp: "5491112345678",
+  });
+
+  await page
+    .locator("#product-grid .product")
+    .filter({ hasText: "Remera alternativa" })
+    .getByRole("button", { name: "Ver producto" })
+    .click();
+
+  const enlace = page.locator("#detail-content .detail-actions a");
+  const href = await enlace.getAttribute("href");
+
+  expect(href).toBeTruthy();
+
+  const url = new URL(href);
+  const mensaje = url.searchParams.get("text");
+
+  expect(url.hostname).toBe("wa.me");
+  expect(url.pathname).toBe("/5491112345678");
+  expect(mensaje).toContain("Remera alternativa");
+  expect(mensaje).toContain("demo-remera");
+  expect(mensaje).toContain("#producto=demo-remera");
+});
+
+test("La consulta de WhatsApp incluye la variante seleccionada", async ({
+  page,
+}) => {
+  await page.route("**/products.json", async (ruta) => {
+    await ruta.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify([
+        {
+          id: "remera-prueba",
+          nombre: "Remera de prueba",
+          categoria: "Ropa nueva",
+          precio: 15000,
+          disponible: true,
+          variantes: [
+            { nombre: "Talle M", stock: 2 },
+            { nombre: "Talle L", stock: 1 },
+          ],
+        },
+      ]),
+    });
+  });
+
+  await page.route("**/config/tienda.json", async (ruta) => {
+    await ruta.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        moneda: "ARS",
+        whatsapp: "5491112345678",
+      }),
+    });
+  });
+
+  await page.reload();
+
+  await expect(page.locator("#result-count")).toHaveText("1 producto");
+
+  await page.getByRole("button", { name: "Ver producto" }).click();
+
+  await page.locator(".variant-select").selectOption("1");
+
+  const enlace = page.locator("#detail-content .detail-actions a");
+  const href = await enlace.getAttribute("href");
+
+  expect(href).toBeTruthy();
+
+  const mensaje = new URL(href).searchParams.get("text");
+
+  expect(mensaje).toContain("Remera de prueba");
+  expect(mensaje).toContain("remera-prueba");
+  expect(mensaje).toContain("Talle L");
+});
+
+test("El catálogo funciona aunque falle la configuración comercial", async ({
+  page,
+}) => {
+  await page.route("**/config/tienda.json", async (ruta) => {
+    await ruta.fulfill({
+      status: 500,
+      body: "Error de configuración",
+    });
+  });
+
+  await page.reload();
+
+  await expect(page.locator("#result-count")).toHaveText("3 productos");
+
+  await expect(page.locator("#product-grid .product")).toHaveCount(3);
+
+  await expect(page.locator("#general-whatsapp")).toHaveAttribute(
+    "aria-disabled",
+    "true",
+  );
 });

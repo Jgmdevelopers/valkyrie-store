@@ -1,7 +1,17 @@
 "use strict";
-// Número autorizado por Pamela, en formato internacional sin + ni espacios.
-const WHATSAPP = "";
-const CONFIG = { moneda: "ARS" };
+
+let WHATSAPP = "";
+
+const CONFIG = {
+  moneda: "ARS",
+};
+
+let fmt = new Intl.NumberFormat("es-AR", {
+  style: "currency",
+  currency: CONFIG.moneda,
+  maximumFractionDigits: 0,
+});
+
 let products = [];
 let selectedCategory = "Todos";
 let searchTerm = "";
@@ -13,17 +23,14 @@ const count = document.getElementById("result-count");
 const empty = document.getElementById("empty-state");
 const dialog = document.getElementById("product-dialog");
 const detail = document.getElementById("detail-content");
-const fmt = new Intl.NumberFormat("es-AR", {
-  style: "currency",
-  currency: CONFIG.moneda,
-  maximumFractionDigits: 0,
-});
+
 const el = (tag, className = "", content) => {
   const n = document.createElement(tag);
   n.className = className;
   if (content !== undefined) n.textContent = content;
   return n;
 };
+
 const stock = (p) =>
   p.disponible !== false && (!Number.isInteger(p.stock) || p.stock > 0);
 const variantAvailable = (v) =>
@@ -35,12 +42,14 @@ const productUrl = (p) => {
   url.hash = `producto=${encodeURIComponent(p.id)}`;
   return url.href;
 };
+
 function whatsappLink(p, variant) {
   const label = p
     ? `Hola, quisiera consultar por ${p.nombre} (código: ${p.id})${variant ? `, opción: ${variant.nombre}` : ""}. ¿Está disponible? ${productUrl(p)}`
     : "Hola, quisiera consultar por los productos de Valkyrie Store.";
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(label)}`;
 }
+
 function renderFilters() {
   filterContainer.replaceChildren();
   const categories = [
@@ -63,6 +72,7 @@ function renderFilters() {
     filterContainer.append(button);
   });
 }
+
 function filteredProducts() {
   const matched = products.filter(
     (p) =>
@@ -82,6 +92,7 @@ function filteredProducts() {
     matched.sort((a, b) => Number(!!b.destacado) - Number(!!a.destacado));
   return matched;
 }
+
 function photo(parent, p) {
   if (!p.imagen) {
     parent.classList.add("no-photo");
@@ -97,6 +108,7 @@ function photo(parent, p) {
   });
   parent.append(img);
 }
+
 function renderProducts() {
   const shown = filteredProducts();
   grid.replaceChildren();
@@ -131,6 +143,7 @@ function renderProducts() {
     grid.append(card);
   });
 }
+
 function makeField(labelText, values, className) {
   const wrap = el("label", "variant-field");
   wrap.append(el("span", "", labelText));
@@ -148,6 +161,7 @@ function makeField(labelText, values, className) {
   wrap.append(select);
   return { wrap, select };
 }
+
 function openDetail(p, updateHash = true) {
   detail.replaceChildren();
   const layout = el("div", "detail-layout");
@@ -203,6 +217,7 @@ function openDetail(p, updateHash = true) {
       contact.removeAttribute("target");
     }
   }
+
   if (select) select.addEventListener("change", updateContact);
   updateContact();
   const share = el("button", "share-action", "Compartir producto");
@@ -235,6 +250,7 @@ function openDetail(p, updateHash = true) {
   if (updateHash) history.replaceState(null, "", productUrl(p));
   if (!dialog.open) dialog.showModal();
 }
+
 function openFromHash() {
   const match = location.hash.match(/^#producto=(.*)$/);
   if (!match) return;
@@ -247,12 +263,15 @@ function openFromHash() {
   const p = products.find((item) => item.id === id);
   if (p) openDetail(p, false);
 }
+
 document
   .getElementById("close-detail")
   .addEventListener("click", () => dialog.close());
+
 dialog.addEventListener("click", (event) => {
   if (event.target === dialog) dialog.close();
 });
+
 dialog.addEventListener("close", () => {
   if (location.hash.startsWith("#producto="))
     history.replaceState(
@@ -290,38 +309,87 @@ if (WHATSAPP) {
     "Te respondemos por WhatsApp.";
 }
 
-fetch("products.json")
-  .then((respuesta) => {
+async function cargarConfiguracion() {
+  try {
+    const respuesta = await fetch("config/tienda.json");
+
     if (!respuesta.ok) {
-      throw new Error("No se pudo obtener el catálogo");
+      throw new Error("No se pudo cargar la configuración");
     }
 
-    return respuesta.json();
-  })
-  .then((datos) => {
-    if (!Array.isArray(datos)) {
-      throw new Error("Formato de catálogo inválido");
-    }
+    const datos = await respuesta.json();
 
-    // Verificamos los productos antes de mostrarlos al cliente.
-    const resultado = window.ValidadorCatalogo.validarCatalogo(datos);
+    WHATSAPP =
+      typeof datos.whatsapp === "string" && /^\d{10,15}$/.test(datos.whatsapp)
+        ? datos.whatsapp
+        : "";
 
-    if (resultado.errores.length > 0) {
-      console.warn("Errores de validación del catálogo:", resultado.errores);
-    }
+    const moneda = "ARS";
 
-    products = resultado.validos;
+    fmt = new Intl.NumberFormat("es-AR", {
+      style: "currency",
+      currency: moneda,
+      maximumFractionDigits: 0,
+    });
 
-    renderFilters();
-    renderProducts();
-    openFromHash();
-  })
-  .catch((error) => {
-    console.error("Error al cargar el catálogo:", error.message);
+    return datos;
+  } catch (error) {
+    console.error("Error de configuración comercial:", error.message);
+    return null;
+  }
+}
 
-    count.textContent =
-      "No se pudo cargar el catálogo. Revisá el servidor local y products.json.";
-  });
+async function iniciarTienda() {
+  await cargarConfiguracion();
+
+  if (WHATSAPP) {
+    const anchor = document.getElementById("general-whatsapp");
+
+    anchor.href = whatsappLink();
+    anchor.textContent = "Consultar por WhatsApp ↗";
+    anchor.classList.remove("disabled-link");
+    anchor.removeAttribute("aria-disabled");
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+
+    document.getElementById("contact-note").textContent =
+      "Te respondemos por WhatsApp.";
+  }
+
+  fetch("products.json")
+    .then((respuesta) => {
+      if (!respuesta.ok) {
+        throw new Error("No se pudo obtener el catálogo");
+      }
+
+      return respuesta.json();
+    })
+    .then((datos) => {
+      if (!Array.isArray(datos)) {
+        throw new Error("Formato de catálogo inválido");
+      }
+
+      const resultado = window.ValidadorCatalogo.validarCatalogo(datos);
+
+      if (resultado.errores.length > 0) {
+        console.warn("Errores de validación del catálogo:", resultado.errores);
+      }
+
+      products = resultado.validos;
+
+      renderFilters();
+      renderProducts();
+      openFromHash();
+    })
+    .catch((error) => {
+      console.error("Error al cargar el catálogo:", error.message);
+
+      count.textContent =
+        "No se pudo cargar el catálogo. Revisá el servidor local y products.json.";
+    });
+}
+
+iniciarTienda();
 
 document.querySelectorAll("[data-categoria]").forEach((anchor) =>
   anchor.addEventListener("click", () => {
