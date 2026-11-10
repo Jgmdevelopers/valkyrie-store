@@ -134,3 +134,48 @@ Esta estructura es **un ejemplo de formato**, no mercadería real:
 ### Instalación desde v0.6
 
 Trabajar en la rama `feature/identidad-valquiria-femenina`. Luego de guardar un commit de seguridad, reemplazar **solo** `index.html`, `styles.css` y `script.js`; conservar los productos y las fotos. No copiar archivos de ejemplo sobre un catálogo real. Probar, revisar `git diff` y registrar un commit de funcionalidad.
+
+
+## Configuración comercial
+
+La información pública de la tienda se administra desde
+`config/tienda.json`.
+
+### WhatsApp
+
+Configurar el campo `whatsapp` con el número autorizado
+por la responsable de la tienda.
+
+Formato: número internacional de 10 a 15 dígitos,
+sin `+`, espacios ni guiones.
+
+Si está vacío o no cumple el formato, el contacto
+por WhatsApp permanece deshabilitado.
+
+### Instagram y Facebook
+
+Los campos `instagram` y `facebook` admiten enlaces HTTPS
+a perfiles de las plataformas correspondientes.
+
+Ejemplos de formato:
+
+- `https://www.instagram.com/usuario/`
+- `https://www.facebook.com/usuario/`
+
+Los enlaces deben utilizar los dominios admitidos:
+`www.instagram.com` y `www.facebook.com`.
+
+Si el campo está vacío o la dirección es inválida,
+el enlace no se muestra.
+
+### Moneda
+
+La versión comercial inicial utiliza pesos argentinos
+(`ARS`).
+
+### Seguridad
+
+Este archivo es público. No almacenar contraseñas,
+tokens de acceso, claves privadas ni información sensible.
+
+Publicar únicamente teléfonos y perfiles autorizados.
