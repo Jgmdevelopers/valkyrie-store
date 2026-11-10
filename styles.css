@@ -511,12 +511,16 @@ footer {
   place-items: center;
   position: relative;
 }
+
 .detail-photo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
   max-height: 75vh;
+
+  /* Mostramos la prenda completa en el detalle. */
+  object-fit: contain;
 }
+
 .detail-photo.no-photo:after {
   content: "V";
   font:
