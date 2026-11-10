@@ -813,3 +813,41 @@ test("El modo demostración carga cuatro productos y bloquea WhatsApp", async ({
 
   await expect(contactoProducto).not.toHaveAttribute("href");
 });
+
+test("Limita la altura de las fotografías del detalle en móvil", async ({
+  page,
+}) => {
+  await page.setViewportSize({
+    width: 390,
+    height: 844,
+  });
+
+  await page.goto(`${urlBase}/?demo=1`);
+
+  await expect(page.locator("#result-count")).toHaveText("4 productos");
+
+  const productos = [
+    "Remera básica negra de mujer",
+    "Vestido negro evasé con lazo",
+    "Zapatillas urbanas negras con cordones",
+    "Zapatos de vestir negros tipo mocasín",
+  ];
+
+  for (const nombre of productos) {
+    const tarjeta = page
+      .locator("#product-grid .product")
+      .filter({ hasText: nombre });
+
+    await tarjeta.getByRole("button", { name: "Ver producto" }).click();
+
+    const fotografia = page.locator(".detail-photo");
+    const dimensiones = await fotografia.boundingBox();
+
+    expect(dimensiones).not.toBeNull();
+    expect(dimensiones.height).toBeLessThanOrEqual(261);
+
+    await expect(page.locator(".detail-info")).toBeVisible();
+
+    await page.locator("#close-detail").click();
+  }
+});
