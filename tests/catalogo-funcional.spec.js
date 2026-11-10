@@ -2,7 +2,7 @@ const { test, expect } = require("@playwright/test");
 const http = require("node:http");
 const fs = require("node:fs/promises");
 const path = require("node:path");
-
+const productosPrueba = require("./fixtures/productos-prueba.json");
 const raiz = path.resolve(__dirname, "..");
 
 const archivos = {
@@ -164,4 +164,96 @@ test("WhatsApp permanece deshabilitado sin configuración", async ({ page }) => 
 
   await expect(enlace).toHaveAttribute("aria-disabled", "true");
   await expect(enlace).not.toHaveAttribute("href", /.+/);
+});
+
+async function cargarCatalogoDePrueba(page) {
+  await page.route("**/products.json", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(productosPrueba),
+    });
+  });
+
+  await page.reload();
+
+  await expect(page.locator("#result-count")).toHaveText("4 productos");
+}
+
+test("Excluye productos agotados y deshabilitados", async ({ page }) => {
+  await cargarCatalogoDePrueba(page);
+
+  await expect(page.locator("#product-grid .product-tag.sold")).toHaveCount(2);
+
+  await page.locator("#only-available").check();
+
+  await expect(page.locator("#product-grid .product")).toHaveCount(2);
+
+  await expect(page.locator("#result-count")).toHaveText("2 productos");
+});
+
+test("Ordena correctamente los precios", async ({ page }) => {
+  await cargarCatalogoDePrueba(page);
+
+  const nombres = page.locator("#product-grid .product h3");
+
+  await page.locator("#sort-products").selectOption("precio-asc");
+
+  await expect(nombres).toHaveText([
+    "Collar no disponible",
+    "Remera agotada",
+    "Campera de prueba",
+    "Buzo sin precio",
+  ]);
+
+  await page.locator("#sort-products").selectOption("precio-desc");
+
+  await expect(nombres).toHaveText([
+    "Campera de prueba",
+    "Remera agotada",
+    "Collar no disponible",
+    "Buzo sin precio",
+  ]);
+});
+
+test("Muestra el precio o la opción consultar", async ({ page }) => {
+  await cargarCatalogoDePrueba(page);
+
+  const campera = page
+    .locator("#product-grid .product")
+    .filter({ hasText: "Campera de prueba" });
+
+  await expect(campera.locator(".price")).toContainText("45.000");
+
+  const buzo = page
+    .locator("#product-grid .product")
+    .filter({ hasText: "Buzo sin precio" });
+
+  await expect(buzo.locator(".price")).toHaveText("Consultar precio");
+});
+
+test("Deshabilita variantes agotadas y selecciona una disponible", async ({
+  page,
+}) => {
+  await cargarCatalogoDePrueba(page);
+
+  await page
+    .locator("#product-grid .product")
+    .filter({ hasText: "Campera de prueba" })
+    .getByRole("button", { name: "Ver producto" })
+    .click();
+
+  const selector = page.locator(".variant-select");
+
+  await expect(selector).toBeVisible();
+
+  await expect(selector.locator("option").nth(0)).toBeDisabled();
+
+  await expect(selector.locator("option").nth(1)).toBeEnabled();
+
+  await expect(selector).toHaveValue("1");
+
+  await expect(page.locator(".detail-availability")).toContainText(
+    "Disponible para consultar",
+  );
 });

@@ -1,0 +1,52 @@
+[
+    {
+        "id": "campera-prueba",
+        "nombre": "Campera de prueba",
+        "categoria": "Ropa nueva",
+        "descripcion": "Producto ficticio para pruebas.",
+        "precio": 45000,
+        "imagen": "",
+        "disponible": true,
+        "stock": 2,
+        "destacado": true,
+        "variantes": [
+            {
+                "nombre": "Talle M",
+                "stock": 0
+            },
+            {
+                "nombre": "Talle L",
+                "stock": 2
+            }
+        ]
+    },
+    {
+        "id": "remera-agotada",
+        "nombre": "Remera agotada",
+        "categoria": "Ropa nueva",
+        "descripcion": "Producto sin stock.",
+        "precio": 20000,
+        "imagen": "",
+        "disponible": true,
+        "stock": 0
+    },
+    {
+        "id": "collar-no-disponible",
+        "nombre": "Collar no disponible",
+        "categoria": "Accesorios",
+        "descripcion": "Producto deshabilitado.",
+        "precio": 10000,
+        "imagen": "",
+        "disponible": false
+    },
+    {
+        "id": "buzo-sin-precio",
+        "nombre": "Buzo sin precio",
+        "categoria": "Ropa nueva",
+        "descripcion": "Producto con precio a consultar.",
+        "precio": null,
+        "imagen": "",
+        "disponible": true,
+        "stock": 3
+    }
+]
