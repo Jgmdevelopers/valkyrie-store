@@ -11,6 +11,7 @@ const archivos = {
   "/styles.css": ["styles.css", "text/css; charset=utf-8"],
   "/script.js": ["script.js", "text/javascript; charset=utf-8"],
   "/products.json": ["products.json", "application/json; charset=utf-8"],
+  "/src/catalogo/validar-productos.js": ["src/catalogo/validar-productos.js","text/javascript; charset=utf-8",],
 };
 
 let servidor;
@@ -256,4 +257,91 @@ test("Deshabilita variantes agotadas y selecciona una disponible", async ({
   await expect(page.locator(".detail-availability")).toContainText(
     "Disponible para consultar",
   );
+});
+
+async function cargarDatosDePrueba(page, datos) {
+  await page.route("**/products.json", async (ruta) => {
+    await ruta.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(datos),
+    });
+  });
+
+  await page.reload();
+}
+
+test("Excluye productos con precios inválidos", async ({ page }) => {
+  const productos = [
+    {
+      id: "producto-valido",
+      nombre: "Producto válido",
+      categoria: "Accesorios",
+      precio: 15000,
+    },
+    {
+      id: "producto-invalido",
+      nombre: "Producto inválido",
+      categoria: "Accesorios",
+      precio: -500,
+    },
+  ];
+
+  await cargarDatosDePrueba(page, productos);
+
+  await expect(page.locator("#result-count")).toHaveText("1 producto");
+
+  await expect(page.locator("#product-grid .product")).toHaveCount(1);
+
+  await expect(page.locator("#product-grid")).not.toContainText(
+    "Producto inválido",
+  );
+});
+
+test("No muestra productos con identificadores duplicados", async ({
+  page,
+}) => {
+  const productos = [
+    {
+      id: "remera-001",
+      nombre: "Remera original",
+      categoria: "Ropa nueva",
+      precio: 20000,
+    },
+    {
+      id: "remera-001",
+      nombre: "Remera duplicada",
+      categoria: "Ropa nueva",
+      precio: 25000,
+    },
+  ];
+
+  await cargarDatosDePrueba(page, productos);
+
+  await expect(page.locator("#result-count")).toHaveText("1 producto");
+
+  await expect(page.locator("#product-grid")).toContainText("Remera original");
+
+  await expect(page.locator("#product-grid")).not.toContainText(
+    "Remera duplicada",
+  );
+});
+
+test("Muestra el estado vacío cuando todos los productos son inválidos", async ({
+  page,
+}) => {
+  await cargarDatosDePrueba(page, [
+    {
+      id: "sin-precio-valido",
+      nombre: "Producto de prueba",
+      categoria: "Accesorios",
+      precio: -100,
+    },
+  ]);
+
+  await expect(page.locator("#result-count")).toHaveText("0 productos");
+
+  await expect(page.locator("#product-grid .product")).toHaveCount(0);
+
+  await expect(page.locator("#empty-state")).toBeVisible();
 });
