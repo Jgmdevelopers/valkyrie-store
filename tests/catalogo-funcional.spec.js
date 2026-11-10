@@ -19,7 +19,24 @@ const archivos = {
     "config/tienda.json",
     "application/json; charset=utf-8",
   ],
+  "/docs/borradores/productos-demo-completos.json": [
+    "docs/borradores/productos-demo-completos.json",
+    "application/json; charset=utf-8",
+  ],
 };
+
+const imagenesDemo = [
+  "remera-dama-negra-001.webp",
+  "vestido-negro-cinturon-001.webp",
+  "zapatillas-negras-001.webp",
+  "zapatos-vestir-negros-001.webp",
+];
+
+for (const imagen of imagenesDemo) {
+  const ruta = `/assets/productos/${imagen}`;
+
+  archivos[ruta] = [`assets/productos/${imagen}`, "image/webp"];
+}
 
 let servidor;
 let urlBase;
@@ -78,6 +95,53 @@ test("El catálogo carga los tres productos demostrativos", async ({ page }) => 
     1,
   );
   await expect(tarjetas.filter({ hasText: "Accesorio" })).toHaveCount(1);
+});
+
+test("Muestra los cuatro productos del catálogo comercial de demostración", async ({
+  page,
+}) => {
+  const productosDemo = require("../docs/borradores/productos-demo-completos.json");
+
+  await page.route("**/products.json", async (ruta) => {
+    await ruta.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(productosDemo),
+    });
+  });
+
+  await page.reload();
+
+  const tarjetas = page.locator("#product-grid .product");
+
+  await expect(tarjetas).toHaveCount(4);
+  await expect(page.locator("#result-count")).toHaveText("4 productos");
+
+  for (const producto of productosDemo) {
+    const tarjeta = tarjetas.filter({ hasText: producto.nombre });
+
+    await expect(tarjeta).toHaveCount(1);
+
+    await expect(tarjeta.locator(".price")).toHaveText(
+      new Intl.NumberFormat("es-AR", {
+        style: "currency",
+        currency: "ARS",
+        maximumFractionDigits: 0,
+      }).format(producto.precio),
+    );
+
+    const imagen = tarjeta.locator("img");
+
+    await expect(imagen).toBeVisible();
+
+    await expect
+      .poll(() =>
+        imagen.evaluate(
+          (elemento) => elemento.complete && elemento.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
 });
 
 test("El filtro por categoría funciona", async ({ page }) => {
@@ -712,4 +776,40 @@ test("Rechaza enlaces sociales inválidos", async ({ page }) => {
     "href",
     /.+/,
   );
+});
+
+test("El modo normal no muestra el aviso de demostración", async ({ page }) => {
+  await expect(page.locator("#demo-notice")).toBeHidden();
+
+  await expect(page.locator("#result-count")).toHaveText("3 productos");
+});
+
+test("El modo demostración carga cuatro productos y bloquea WhatsApp", async ({
+  page,
+}) => {
+  await page.goto(`${urlBase}/?demo=1`);
+
+  await expect(page.locator("#demo-notice")).toBeVisible();
+
+  await expect(page.locator("#demo-notice")).toContainText(
+    "Los precios, talles y cantidades son ilustrativos",
+  );
+
+  await expect(page.locator("#result-count")).toHaveText("4 productos");
+
+  await expect(page.locator("#product-grid .product")).toHaveCount(4);
+
+  const contactoGeneral = page.locator("#general-whatsapp");
+
+  await expect(contactoGeneral).not.toHaveAttribute("href");
+
+  const primerProducto = page.locator("#product-grid .product").first();
+
+  await primerProducto.getByRole("button", { name: "Ver producto" }).click();
+
+  const contactoProducto = page.locator("#detail-content .detail-actions a");
+
+  await expect(contactoProducto).toHaveAttribute("aria-disabled", "true");
+
+  await expect(contactoProducto).not.toHaveAttribute("href");
 });
