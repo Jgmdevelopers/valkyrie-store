@@ -1,0 +1,82 @@
+[
+  {
+    "id": "remera-dama-negra-001",
+    "nombre": "Remera básica negra de mujer",
+    "categoria": "Ropa nueva",
+    "descripcion": "Remera lisa negra de cuello redondo, manga corta y silueta recta. Una opción versátil para combinar con looks casuales o urbanos. Talles de demostración sujetos a confirmación.",
+    "precio": 22900,
+    "imagen": "assets/productos/remera-dama-negra-001.webp",
+    "disponible": true,
+    "destacado": true,
+    "variantes": [
+      {
+        "nombre": "Negro / M",
+        "stock": 2
+      },
+      {
+        "nombre": "Negro / L",
+        "stock": 2
+      }
+    ]
+  },
+  {
+    "id": "vestido-negro-cinturon-001",
+    "nombre": "Vestido negro evasé con lazo",
+    "categoria": "Ropa nueva",
+    "descripcion": "Vestido corto negro con mangas largas, escote redondeado, falda evasé y lazo ancho en la cintura. Estilo elegante para salidas y ocasiones especiales. Talles de demostración sujetos a confirmación.",
+    "precio": 49900,
+    "imagen": "assets/productos/vestido-negro-cinturon-001.webp",
+    "disponible": true,
+    "destacado": true,
+    "variantes": [
+      {
+        "nombre": "Negro / S",
+        "stock": 1
+      },
+      {
+        "nombre": "Negro / M",
+        "stock": 1
+      }
+    ]
+  },
+  {
+    "id": "zapatillas-negras-001",
+    "nombre": "Zapatillas urbanas negras con cordones",
+    "categoria": "Calzado",
+    "descripcion": "Zapatillas bajas negras con cordones, detalle en el talón y suela clara. Diseño informal para uso cotidiano. Marca, material, estado y numeración real pendientes de verificar.",
+    "precio": 59900,
+    "imagen": "assets/productos/zapatillas-negras-001.webp",
+    "disponible": true,
+    "destacado": false,
+    "variantes": [
+      {
+        "nombre": "Negro / 38",
+        "stock": 1
+      },
+      {
+        "nombre": "Negro / 39",
+        "stock": 1
+      }
+    ]
+  },
+  {
+    "id": "zapatos-vestir-negros-001",
+    "nombre": "Zapatos de vestir negros tipo mocasín",
+    "categoria": "Calzado",
+    "descripcion": "Zapatos de vestir negros, de punta redondeada y terminación brillante, estilo mocasín. La corbata de la fotografía es decorativa y no está incluida. Material, marca, estado y numeración real a confirmar.",
+    "precio": 69900,
+    "imagen": "assets/productos/zapatos-vestir-negros-001.webp",
+    "disponible": true,
+    "destacado": false,
+    "variantes": [
+      {
+        "nombre": "Negro / 41",
+        "stock": 1
+      },
+      {
+        "nombre": "Negro / 42",
+        "stock": 1
+      }
+    ]
+  }
+]
