@@ -21,6 +21,19 @@ const archivos = {
   ],
 };
 
+const imagenesDemo = [
+  "remera-dama-negra-001.webp",
+  "vestido-negro-cinturon-001.webp",
+  "zapatillas-negras-001.webp",
+  "zapatos-vestir-negros-001.webp",
+];
+
+for (const imagen of imagenesDemo) {
+  const ruta = `/assets/productos/${imagen}`;
+
+  archivos[ruta] = [`assets/productos/${imagen}`, "image/webp"];
+}
+
 let servidor;
 let urlBase;
 
@@ -78,6 +91,53 @@ test("El catálogo carga los tres productos demostrativos", async ({ page }) => 
     1,
   );
   await expect(tarjetas.filter({ hasText: "Accesorio" })).toHaveCount(1);
+});
+
+test("Muestra los cuatro productos del catálogo comercial de demostración", async ({
+  page,
+}) => {
+  const productosDemo = require("../docs/borradores/productos-demo-completos.json");
+
+  await page.route("**/products.json", async (ruta) => {
+    await ruta.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(productosDemo),
+    });
+  });
+
+  await page.reload();
+
+  const tarjetas = page.locator("#product-grid .product");
+
+  await expect(tarjetas).toHaveCount(4);
+  await expect(page.locator("#result-count")).toHaveText("4 productos");
+
+  for (const producto of productosDemo) {
+    const tarjeta = tarjetas.filter({ hasText: producto.nombre });
+
+    await expect(tarjeta).toHaveCount(1);
+
+    await expect(tarjeta.locator(".price")).toHaveText(
+      new Intl.NumberFormat("es-AR", {
+        style: "currency",
+        currency: "ARS",
+        maximumFractionDigits: 0,
+      }).format(producto.precio),
+    );
+
+    const imagen = tarjeta.locator("img");
+
+    await expect(imagen).toBeVisible();
+
+    await expect
+      .poll(() =>
+        imagen.evaluate(
+          (elemento) => elemento.complete && elemento.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
 });
 
 test("El filtro por categoría funciona", async ({ page }) => {
