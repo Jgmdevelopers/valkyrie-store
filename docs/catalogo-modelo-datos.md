@@ -1,7 +1,7 @@
 # Valkyrie Store — Contrato de datos del catálogo
 
-**Versión:** 1.0 (propuesta)
-**Estado:** Pendiente de implementación y validación
+**Versión:** 1.0
+**Estado:** Implementado y validado
 **Formato:** JSON
 **Archivo de producción:** `products.json`
 
@@ -63,10 +63,66 @@ Los errores deberán poder diagnosticarse durante el desarrollo sin mostrar deta
 - Utilizar fixtures independientes para validar escenarios.
 - Mantener las pruebas existentes como regresión.
 
-## 7. Pendientes
+## 7. Estado de implementación
 
-- Implementar el validador.
-- Agregar pruebas unitarias de datos inválidos.
-- Integrar la validación en la carga del catálogo.
-- Revisar reglas de variantes y disponibilidad efectiva.
-- Actualizar documentación y criterios de aceptación.
+- [x] Validador de productos implementado.
+- [x] Pruebas unitarias de datos inválidos.
+- [x] Validación integrada en el catálogo público.
+- [x] Detección de identificadores duplicados.
+- [x] Validación de precios, stock y variantes.
+- [x] Pruebas funcionales del catálogo.
+- [x] Manejo de fotografías inexistentes.
+
+## 8. Preparación comercial
+
+- [ ] Incorporar fotografías reales autorizadas.
+- [ ] Cargar productos confirmados por Pamela.
+- [ ] Verificar precios y disponibilidad.
+- [ ] Revisar talles, colores y variantes reales.
+- [ ] Validar la presentación visual.
+- [ ] Preparar publicación comercial.
+
+````
+
+Con esto mantenemos la documentación alineada con el software real.
+
+## 3. Organizar el primer producto comercial
+
+Cuando Pamela entregue las primeras fotografías, utilizaremos una estructura sencilla:
+
+```text
+assets/
+└── productos/
+    ├── .gitkeep
+    ├── remera-001.webp
+    ├── remera-002.webp
+    └── accesorio-001.webp
+````
+
+Cada producto tendrá un identificador estable que no dependerá de su nombre comercial.
+
+### Ejemplo de una prenda con talles
+
+Este ejemplo es exclusivamente técnico; no debemos incorporarlo a `products.json` hasta disponer de datos reales.
+
+<CodeBlock language="json" editable>
+{
+  "id": "remera-001",
+  "nombre": "Remera estampada",
+  "categoria": "Ropa nueva",
+  "descripcion": "Remera de algodón con estampado.",
+  "precio": 25000,
+  "imagen": "assets/productos/remera-001.webp",
+  "disponible": true,
+  "destacado": false,
+  "variantes": [
+    {
+      "nombre": "Negro / M",
+      "stock": 2
+    },
+    {
+      "nombre": "Negro / L",
+      "stock": 1
+    }
+  ]
+}
