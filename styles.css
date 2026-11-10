@@ -1,16 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap");
 :root {
   color-scheme: dark;
+
+  /* Colores efectivos de la versión actual */
   --black: #080808;
-  --panel: #151515;
-  --panel2: #202020;
-  --ink: #f5f5f5;
-  --muted: #b3b3b3;
-  --line: #424242;
-  --accent: #eeeeee;
-  --silver: #cccccc;
-  --white: #ffffff;
+  --panel: #161616;
+  --panel2: #222;
+  --ink: #f6f5f3;
+  --muted: #bcbcbc;
+  --line: #4a4a4a;
+  --accent: #efefef;
+  --silver: #d4d4d4;
+  --white: #fff;
 }
+
 * {
   box-sizing: border-box;
 }
@@ -112,32 +114,7 @@ input:focus-visible {
 .header-cta:hover {
   background: var(--accent);
 }
-.hero {
-  min-height: 620px;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  background: radial-gradient(
-    circle at 75% 45%,
-    #1c1c1c 0%,
-    #0d0d0d 55%,
-    #080808 100%
-  );
-  color: #ffffff;
-  overflow: hidden;
-  position: relative;
-  border-bottom: 1px solid #333333;
-}
-.hero:before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.15;
-  background-image:
-    repeating-linear-gradient(0deg, transparent 0 50px, #929292 51px),
-    repeating-linear-gradient(90deg, transparent 0 50px, #929292 51px);
-  background-size: 52px 52px;
-  mask-image: linear-gradient(to right, transparent, #000000);
-}
+
 .hero-content {
   padding: 105px 20px 110px max(7vw, 22px);
   position: relative;
@@ -174,13 +151,7 @@ input:focus-visible {
   color: #767676;
   font-style: normal;
 }
-.hero p {
-  color: #c7c7c7;
-  line-height: 1.8;
-  max-width: 460px;
-  font-size: 15px;
-  margin-bottom: 34px;
-}
+
 .btn {
   display: inline-flex;
   justify-content: space-between;
@@ -208,65 +179,7 @@ input:focus-visible {
   transform: translateY(-2px);
   filter: brightness(1.1);
 }
-.hero-art {
-  position: relative;
-  display: grid;
-  place-items: center;
-  min-height: 460px;
-  overflow: hidden;
-  background: radial-gradient(circle, #272727 0%, #181818 43%, transparent 70%);
-}
-.hero-art:before,
-.hero-art:after {
-  content: "";
-  position: absolute;
-  width: 54%;
-  height: 100%;
-  top: -12%;
-  border-left: 2px solid #5a5a5a;
-  border-right: 2px solid #5a5a5a;
-  transform: rotate(30deg);
-  opacity: 0.2;
-}
-.hero-art:after {
-  transform: rotate(-30deg);
-}
-.hero-monogram {
-  font:
-    900 clamp(300px, 36vw, 570px)/1 "Barlow Condensed",
-    Impact,
-    sans-serif;
-  color: #d1d1d1;
-  opacity: 0.92;
-  text-shadow:
-    15px 16px 1px #3f3f3f,
-    24px 24px 45px #000000;
-  z-index: 1;
-  transform: skew(-7deg);
-}
-.hero-orbit {
-  position: absolute;
-  border: 1px solid #7373733f;
-  border-radius: 50%;
-  width: 70%;
-  aspect-ratio: 1;
-  transform: rotate(-25deg) scaleX(0.65);
-}
-.orbit-b {
-  transform: rotate(35deg) scaleX(0.65);
-  width: 83%;
-}
-.hero-art-caption {
-  position: absolute;
-  right: 8%;
-  bottom: 35px;
-  text-align: right;
-  font-size: 11px;
-  letter-spacing: 3px;
-  line-height: 1.7;
-  color: #aaaaaa;
-  z-index: 2;
-}
+
 .benefits {
   display: flex;
   justify-content: center;
@@ -542,6 +455,47 @@ input:focus-visible {
   color: #aaaaaa;
   margin-top: 16px;
 }
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.social-links[hidden],
+.social-link[hidden] {
+  display: none;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 20px;
+  border: 1px solid #666;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.social-link:hover {
+  border-color: #fff;
+  background: #ffffff12;
+}
+
+.social-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
 .disabled-link {
   opacity: 0.65;
   pointer-events: none;
@@ -598,12 +552,16 @@ footer {
   place-items: center;
   position: relative;
 }
+
 .detail-photo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
   max-height: 75vh;
+
+  /* Mostramos la prenda completa en el detalle. */
+  object-fit: contain;
 }
+
 .detail-photo.no-photo:after {
   content: "V";
   font:
@@ -645,19 +603,32 @@ footer {
   margin: 0;
 }
 @media (max-width: 900px) {
-  .topbar nav {
-    gap: 15px;
+  .topbar {
+    flex-wrap: wrap;
+    column-gap: 16px;
+    row-gap: 14px;
   }
-  .hero {
-    grid-template-columns: 1fr 0.8fr;
+
+  .topbar nav {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: center;
+    gap: 24px;
+  }
+  .brand {
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .header-cta {
+    flex-shrink: 0;
+    white-space: nowrap;
   }
   .hero-content {
     padding-top: 90px;
     padding-bottom: 90px;
   }
-  .hero-art {
-    min-height: 400px;
-  }
+
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -699,31 +670,16 @@ footer {
     font-size: 10px;
     padding: 10px;
   }
-  .hero {
-    display: block;
-    min-height: auto;
-  }
+
   .hero-content {
     padding: 80px 22px 58px;
   }
+
   .hero h1 {
     font-size: clamp(67px, 18vw, 105px);
     margin: 22px 0;
   }
-  .hero p {
-    font-size: 14px;
-  }
-  .hero-art {
-    min-height: 240px;
-    max-height: 300px;
-  }
-  .hero-monogram {
-    font-size: 300px;
-  }
-  .hero-art-caption {
-    font-size: 9px;
-    bottom: 18px;
-  }
+
   .benefits {
     gap: 12px 22px;
     padding: 17px;
@@ -735,6 +691,7 @@ footer {
   .section-heading {
     display: block;
   }
+
   .section-heading p {
     max-width: none;
     margin-top: 20px;
@@ -833,28 +790,7 @@ body {
   color: #fff;
   border-color: #777;
 }
-.hero {
-  background: radial-gradient(
-    circle at 78% 42%,
-    #2e2e2e 0%,
-    #111 55%,
-    #080808 100%
-  );
-}
-.hero-art {
-  background: radial-gradient(circle, #343434 0%, #1c1c1c 44%, #080808 78%);
-}
-.hero-art::before,
-.hero-art::after {
-  border-color: #b8b8b8;
-}
-.hero-monogram {
-  color: #ededed;
-  text-shadow:
-    15px 16px 1px #515151,
-    24px 24px 45px #000;
-}
-.hero-art-caption,
+
 .overline,
 .eyebrow,
 .product-category,
@@ -867,9 +803,7 @@ body {
 .contact h2 i {
   color: #d0d0d0;
 }
-.hero-orbit {
-  border-color: #89898950;
-}
+
 .benefits {
   background: #202020;
   border-color: #484848;
@@ -934,19 +868,6 @@ input:focus-visible {
   color: #000;
 }
 
-/* v0.5 — Valkyrie: elegancia femenina + impronta nordica (solo escala de grises) */
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap");
-:root {
-  --black: #080808;
-  --panel: #161616;
-  --panel2: #222;
-  --ink: #f6f5f3;
-  --muted: #bcbcbc;
-  --line: #4a4a4a;
-  --accent: #efefef;
-  --silver: #d4d4d4;
-  --white: #fff;
-}
 .brand,
 .footer-brand {
   font-family: "Cinzel", Georgia, serif;
@@ -969,29 +890,12 @@ input:focus-visible {
   color: #f0f0f0;
   display: block;
 }
-.hero {
-  background: radial-gradient(
-    ellipse at 78% 50%,
-    #272727 0%,
-    #0d0d0d 55%,
-    #050505 100%
-  );
-}
-.hero::before {
-  opacity: 0.075;
-  background-image: repeating-linear-gradient(
-    135deg,
-    transparent 0 48px,
-    #aaa 49px,
-    #aaa 50px,
-    transparent 51px 96px
-  );
-  mask-image: linear-gradient(90deg, transparent 15%, #000 100%);
-}
+
 .hero-content {
   padding-top: 115px;
   padding-bottom: 115px;
 }
+
 .hero h1 {
   font-family: "Cinzel", Georgia, serif;
   font-weight: 500;
@@ -999,71 +903,27 @@ input:focus-visible {
   line-height: 1.2;
   letter-spacing: -1px;
   text-transform: none;
-  max-width: 750px;
 }
+
 .hero h1 i {
-  display: inline-block;
   color: #dadada;
   font-style: normal;
-  font-weight: 400;
 }
-.hero p {
-  font-size: 15px;
-  max-width: 520px;
-}
+
 .eyebrow,
 .overline {
   font-weight: 500;
   letter-spacing: 2.5px;
   color: #c6c6c6;
 }
+
 .dot {
   width: 6px;
   height: 6px;
   border: 1px solid #eee;
   background: transparent;
 }
-.hero-art {
-  background: radial-gradient(
-    circle at 50% 50%,
-    #303030 0%,
-    #141414 44%,
-    transparent 75%
-  );
-}
-.hero-art::before,
-.hero-art::after {
-  border: 0;
-  width: 75%;
-  height: 75%;
-  top: 12%;
-  left: 12%;
-  outline: 1px solid #777;
-  transform: rotate(45deg);
-  opacity: 0.15;
-}
-.hero-art::after {
-  transform: rotate(15deg);
-  opacity: 0.13;
-}
-.hero-monogram {
-  width: min(55%, 350px);
-  filter: drop-shadow(0px 25px 18px #000);
-  transform: none;
-  opacity: 0.9;
-  text-shadow: none;
-}
-.hero-monogram .valkyrie-mark {
-  stroke: none;
-  filter: drop-shadow(0 0 22px #8885);
-}
-.hero-orbit {
-  border-color: #bcbcbc36;
-}
-.hero-art-caption {
-  letter-spacing: 2.1px;
-  font-family: "Cinzel", Georgia, serif;
-}
+
 .benefits {
   background: #151515;
   font-family: "Cinzel", Georgia, serif;
@@ -1149,12 +1009,7 @@ input:focus-visible {
     line-height: 1.25;
     letter-spacing: -0.4px;
   }
-  .hero-art {
-    min-height: 270px;
-  }
-  .hero-monogram {
-    width: 170px;
-  }
+
   .section-heading h2,
   .about h2,
   .contact h2 {
@@ -1168,13 +1023,6 @@ input:focus-visible {
   }
 }
 
-/* v0.6 — Gothic Valkyrie: femenino + rock + metal + gótico; 100% monocromático */
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap");
-.hero {
-  grid-template-columns: 1.05fr 0.95fr;
-  min-height: 570px;
-  background: linear-gradient(100deg, #060606 30%, #202020 100%);
-}
 .hero-content {
   padding-top: 100px;
   padding-bottom: 90px;
@@ -1190,42 +1038,7 @@ input:focus-visible {
 .hero h1 i {
   color: #d1d1d1;
 }
-.hero-photo {
-  min-height: 570px;
-  background: #141414;
-  isolation: isolate;
-}
-.hero-photo:before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    #090909 0%,
-    transparent 22%,
-    transparent 72%,
-    #08080888 100%
-  );
-  opacity: 1;
-  border: 0;
-  outline: 0;
-  transform: none;
-  width: auto;
-  height: auto;
-  top: 0;
-  left: 0;
-}
-.hero-photo:after {
-  display: none;
-}
-.hero-photo .hero-art-caption {
-  right: 7%;
-  bottom: 25px;
-  color: white;
-  font-family: "Cinzel", Georgia, serif;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 8px black;
-}
+
 .categories {
   padding-top: 64px;
   padding-bottom: 28px;
@@ -1287,15 +1100,6 @@ input:focus-visible {
   letter-spacing: 1.3px;
 }
 @media (max-width: 750px) {
-  .hero {
-    display: flex;
-    flex-direction: column-reverse;
-  }
-  .hero-photo {
-    width: 100%;
-    min-height: 350px;
-    background-position: center 22%;
-  }
   .hero-content {
     padding: 47px 22px 62px;
   }
@@ -1318,9 +1122,6 @@ input:focus-visible {
   }
   .category-tile {
     min-height: 110px;
-  }
-  .hero-photo {
-    min-height: 310px;
   }
 }
 
@@ -1397,40 +1198,7 @@ input:focus-visible {
    VALKYRIE STORE v0.8
    Corrección del hero y diseño responsive
    ========================================== */
-
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  min-height: 570px;
-  position: relative;
-  overflow: hidden;
-  align-items: stretch;
-}
-
-/* Evita que el efecto decorativo ocupe
-   una celda de la grilla */
-.hero-glow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Imagen a la izquierda */
-.hero-art.hero-photo {
-  grid-column: 1;
-  grid-row: 1;
-  min-height: 570px;
-  background-position: center 25%;
-  background-size: cover;
-}
-
-/* Contenido a la derecha */
 .hero-content {
-  grid-column: 2;
-  grid-row: 1;
-  min-width: 0;
-  align-self: center;
   padding: 60px clamp(28px, 4vw, 76px);
   position: relative;
   z-index: 2;
@@ -1442,25 +1210,8 @@ input:focus-visible {
   overflow-wrap: normal;
 }
 
-.hero p {
-  max-width: 490px;
-  line-height: 1.75;
-}
-
 /* Tablets y celulares */
 @media (max-width: 750px) {
-  .hero {
-    display: flex;
-    flex-direction: column-reverse;
-    min-height: 0;
-  }
-
-  .hero-art.hero-photo {
-    width: 100%;
-    min-height: 350px;
-    background-position: center 22%;
-  }
-
   .hero-content {
     width: 100%;
     padding: 42px 24px 58px;
@@ -1472,10 +1223,6 @@ input:focus-visible {
 }
 
 @media (max-width: 480px) {
-  .hero-art.hero-photo {
-    min-height: 310px;
-  }
-
   .hero-content {
     padding: 35px 20px 48px;
   }
@@ -1496,6 +1243,7 @@ input:focus-visible {
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
+  color: #ffffff;
   background:
     linear-gradient(
       90deg,
@@ -1504,31 +1252,33 @@ input:focus-visible {
       rgba(5, 5, 5, 0.28) 58%,
       rgba(5, 5, 5, 0.55) 100%
     ),
-    url('assets/valquirias-negras-patagonia-dorada.png') center center / cover no-repeat;
+    url("assets/valquirias-negras-patagonia-dorada.png") center center / cover
+      no-repeat;
   border-bottom: 1px solid #2e2e2e;
 }
 
 .hero.hero-full::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background:
     linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.42)),
-    radial-gradient(circle at 70% 45%, rgba(255, 210, 140, 0.10), transparent 35%);
+    radial-gradient(
+      circle at 70% 45%,
+      rgba(255, 210, 140, 0.1),
+      transparent 35%
+    );
   pointer-events: none;
   z-index: 0;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+  opacity: 0.075;
+  mask-image: linear-gradient(90deg, transparent 15%, #000 100%);
 }
 
 .hero.hero-full .hero-content {
   position: relative;
   z-index: 2;
+  min-width: 0;
+  align-self: center;
   max-width: 720px;
   padding: 120px max(7vw, 24px) 110px;
 }
@@ -1544,7 +1294,7 @@ input:focus-visible {
 
 .hero.hero-full h1 {
   margin: 22px 0 22px;
-  font-family: 'Cinzel', Georgia, serif;
+  font-family: "Cinzel", Georgia, serif;
   font-weight: 700;
   font-size: clamp(42px, 6vw, 92px);
   line-height: 1.02;
@@ -1552,11 +1302,14 @@ input:focus-visible {
   text-transform: uppercase;
   color: #f7f4f1;
   text-shadow: 0 3px 18px rgba(0, 0, 0, 0.45);
+  max-width: 750px;
 }
 
 .hero.hero-full h1 i {
   color: #d7d2cc;
   font-style: normal;
+  display: inline-block;
+  font-weight: 400;
 }
 
 .hero.hero-full p {
@@ -1599,7 +1352,7 @@ input:focus-visible {
   right: max(4vw, 18px);
   bottom: 24px;
   z-index: 2;
-  font-family: 'Cinzel', Georgia, serif;
+  font-family: "Cinzel", Georgia, serif;
   font-size: 11px;
   letter-spacing: 2.4px;
   color: rgba(255, 255, 255, 0.78);
@@ -1608,10 +1361,6 @@ input:focus-visible {
 }
 
 /* Ocultamos piezas del hero anterior si aún quedaran */
-.hero.hero-full .hero-art,
-.hero.hero-full .hero-glow {
-  display: none;
-}
 
 @media (max-width: 900px) {
   .hero.hero-full {

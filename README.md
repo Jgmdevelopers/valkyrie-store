@@ -16,7 +16,7 @@ Abrir http://localhost:8000. No abrir `index.html` directamente como archivo: el
 
 1. Editar `products.json` para reemplazar los ejemplos por productos reales. `precio` acepta un número en ARS (por ejemplo `25000`) o `null` para «Consultar precio».
 2. Copiar fotografías a `assets/` y referenciarlas en el campo `imagen`, por ejemplo `assets/remera.jpg`. Procurar imágenes propias y optimizadas.
-3. En `script.js`, reemplazar `const WHATSAPP = '';` por el número que Pamela autorice publicar, formato internacional **549...**, sin +, espacios ni guiones.
+3. Para habilitar las consultas comerciales, configurar el campo whatsapp en config/tienda.json con el número autorizado por Pamela, en formato internacional, sin +, espacios ni guiones. Mientras permanezca vacío, los enlaces de consulta estarán deshabilitados.
 4. Cambiar la descripción comercial y datos de contacto en `index.html`. Nunca colocar datos personales sin autorización.
 5. Publicar en un hosting estático que permita el uso comercial planificado, previa revisión de sus condiciones vigentes. El repositorio puede alojarse en GitHub sin habilitar GitHub Pages como hosting comercial.
 
@@ -134,3 +134,48 @@ Esta estructura es **un ejemplo de formato**, no mercadería real:
 ### Instalación desde v0.6
 
 Trabajar en la rama `feature/identidad-valquiria-femenina`. Luego de guardar un commit de seguridad, reemplazar **solo** `index.html`, `styles.css` y `script.js`; conservar los productos y las fotos. No copiar archivos de ejemplo sobre un catálogo real. Probar, revisar `git diff` y registrar un commit de funcionalidad.
+
+
+## Configuración comercial
+
+La información pública de la tienda se administra desde
+`config/tienda.json`.
+
+### WhatsApp
+
+Configurar el campo `whatsapp` con el número autorizado
+por la responsable de la tienda.
+
+Formato: número internacional de 10 a 15 dígitos,
+sin `+`, espacios ni guiones.
+
+Si está vacío o no cumple el formato, el contacto
+por WhatsApp permanece deshabilitado.
+
+### Instagram y Facebook
+
+Los campos `instagram` y `facebook` admiten enlaces HTTPS
+a perfiles de las plataformas correspondientes.
+
+Ejemplos de formato:
+
+- `https://www.instagram.com/usuario/`
+- `https://www.facebook.com/usuario/`
+
+Los enlaces deben utilizar los dominios admitidos:
+`www.instagram.com` y `www.facebook.com`.
+
+Si el campo está vacío o la dirección es inválida,
+el enlace no se muestra.
+
+### Moneda
+
+La versión comercial inicial utiliza pesos argentinos
+(`ARS`).
+
+### Seguridad
+
+Este archivo es público. No almacenar contraseñas,
+tokens de acceso, claves privadas ni información sensible.
+
+Publicar únicamente teléfonos y perfiles autorizados.
