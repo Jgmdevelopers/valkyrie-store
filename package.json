@@ -4,8 +4,9 @@
   "description": "Landing page responsive en HTML, CSS y JavaScript, sin backend ni dependencias de compilación. Los productos actuales son **ejemplos ficticios**, no artículos reales ni precios de Pamela.",
   "main": "script.js",
   "scripts": {
-    "test": "npm run test:unit && npm run test:e2e",
+    "test": "npm run test:unit && npm run test:catalogo && npm run test:e2e",
     "test:unit": "node --test tests/*.test.js",
+    "test:catalogo": "node scripts/validar-catalogo.js",
     "test:e2e": "playwright test",
     "test:responsive": "playwright test tests/hero-responsive.spec.js"
   },

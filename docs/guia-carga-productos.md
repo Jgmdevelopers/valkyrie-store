@@ -89,6 +89,8 @@ Este ejemplo es ficticio. No representa un producto ni un precio real de Pamela.
 6. Revisar visualmente las tarjetas y el detalle.
 7. Registrar los cambios mediante Git.
 8. Publicar la actualización en el alojamiento correspondiente.
+Antes de publicar, ejecutar npm run test:catalogo. Todas las fotografías referenciadas deben existir en assets/productos/. Los productos sin fotografía pueden mantener el campo imagen vacío y utilizarán la presentación alternativa del catálogo.
+Cuando un producto tiene variantes, se considera agotado si ninguna está disponible. Se recomienda administrar las cantidades en cada variante y omitir el stock general cuando represente la misma mercadería, para evitar inconsistencias.
 
 ## 6. Evolución futura
 
