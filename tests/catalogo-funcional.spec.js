@@ -11,7 +11,10 @@ const archivos = {
   "/styles.css": ["styles.css", "text/css; charset=utf-8"],
   "/script.js": ["script.js", "text/javascript; charset=utf-8"],
   "/products.json": ["products.json", "application/json; charset=utf-8"],
-  "/src/catalogo/validar-productos.js": ["src/catalogo/validar-productos.js","text/javascript; charset=utf-8",],
+  "/src/catalogo/validar-productos.js": [
+    "src/catalogo/validar-productos.js",
+    "text/javascript; charset=utf-8",
+  ],
 };
 
 let servidor;
@@ -344,4 +347,63 @@ test("Muestra el estado vacío cuando todos los productos son inválidos", async
   await expect(page.locator("#product-grid .product")).toHaveCount(0);
 
   await expect(page.locator("#empty-state")).toBeVisible();
+});
+
+test("Muestra una fotografía válida del producto", async ({ page }) => {
+  const imagen = "assets/productos/prueba.svg";
+
+  // Simulamos una imagen sin agregar archivos al catálogo real.
+  await page.route("**/assets/productos/prueba.svg", async (ruta) => {
+    await ruta.fulfill({
+      status: 200,
+      contentType: "image/svg+xml",
+      body: '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400"><rect width="300" height="400" fill="#555"/></svg>',
+    });
+  });
+
+  await cargarDatosDePrueba(page, [
+    {
+      id: "producto-con-foto",
+      nombre: "Producto con fotografía",
+      categoria: "Ropa nueva",
+      precio: 15000,
+      imagen,
+    },
+  ]);
+
+  const tarjeta = page.locator("#product-grid .product");
+
+  await expect(tarjeta.locator("img")).toBeVisible();
+  await expect(tarjeta.locator(".no-photo")).toHaveCount(0);
+
+  await tarjeta.getByRole("button", { name: "Ver producto" }).click();
+
+  const fotoDetalle = page.locator(".detail-photo img");
+
+  await expect(fotoDetalle).toBeVisible();
+  await expect(fotoDetalle).toHaveCSS("object-fit", "contain");
+});
+
+test("Muestra el fallback cuando la fotografía falla", async ({ page }) => {
+  await page.route("**/assets/productos/inexistente.webp", async (ruta) => {
+    await ruta.fulfill({
+      status: 404,
+      body: "Imagen no encontrada",
+    });
+  });
+
+  await cargarDatosDePrueba(page, [
+    {
+      id: "producto-sin-foto",
+      nombre: "Producto sin fotografía",
+      categoria: "Accesorios",
+      precio: 10000,
+      imagen: "assets/productos/inexistente.webp",
+    },
+  ]);
+
+  const media = page.locator("#product-grid .product-image");
+
+  await expect(media).toHaveClass(/no-photo/);
+  await expect(media.locator("img")).toHaveCount(0);
 });
