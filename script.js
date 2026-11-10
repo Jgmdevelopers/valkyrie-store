@@ -31,12 +31,21 @@ const el = (tag, className = "", content) => {
   return n;
 };
 
-const stock = (p) =>
-  p.disponible !== false && (!Number.isInteger(p.stock) || p.stock > 0);
 const variantAvailable = (v) =>
   v.disponible !== false && (!Number.isInteger(v.stock) || v.stock > 0);
+
+const stockGeneral = (p) =>
+  p.disponible !== false && (!Number.isInteger(p.stock) || p.stock > 0);
+
+const stock = (p) =>
+  stockGeneral(p) &&
+  (!Array.isArray(p.variantes) ||
+    p.variantes.length === 0 ||
+    p.variantes.some(variantAvailable));
+
 const price = (p) =>
   p.precio == null ? "Consultar precio" : fmt.format(p.precio);
+
 const productUrl = (p) => {
   const url = new URL(window.location.href);
   url.hash = `producto=${encodeURIComponent(p.id)}`;

@@ -292,6 +292,82 @@ async function cargarDatosDePrueba(page, datos) {
   await page.reload();
 }
 
+test("Marca agotado cuando todas las variantes están sin stock", async ({
+  page,
+}) => {
+  await cargarDatosDePrueba(page, [
+    {
+      id: "remera-agotada",
+      nombre: "Remera agotada",
+      categoria: "Ropa nueva",
+      precio: 15000,
+      disponible: true,
+      variantes: [
+        { nombre: "Talle M", stock: 0 },
+        { nombre: "Talle L", stock: 0 },
+      ],
+    },
+  ]);
+
+  const tarjeta = page.locator("#product-grid .product");
+
+  await expect(tarjeta.locator(".product-tag.sold")).toHaveText("Agotado");
+
+  await tarjeta.getByRole("button", { name: "Ver producto" }).click();
+
+  await expect(page.locator(".detail-availability")).toHaveText(
+    "Actualmente no disponible",
+  );
+
+  const contacto = page.locator("#detail-content .detail-actions a");
+
+  await expect(contacto).toHaveAttribute("aria-disabled", "true");
+
+  await page.locator("#close-detail").click();
+
+  await page.locator("#only-available").check();
+
+  await expect(page.locator("#product-grid .product")).toHaveCount(0);
+});
+
+test("Mantiene disponible el producto si una variante tiene stock", async ({
+  page,
+}) => {
+  await cargarDatosDePrueba(page, [
+    {
+      id: "remera-disponible",
+      nombre: "Remera con talles",
+      categoria: "Ropa nueva",
+      precio: 18000,
+      disponible: true,
+      variantes: [
+        { nombre: "Talle M", stock: 0 },
+        { nombre: "Talle L", stock: 2 },
+      ],
+    },
+  ]);
+
+  const tarjeta = page.locator("#product-grid .product");
+
+  await expect(tarjeta.locator(".product-tag.sold")).toHaveCount(0);
+
+  await page.locator("#only-available").check();
+
+  await expect(tarjeta).toHaveCount(1);
+
+  await tarjeta.getByRole("button", { name: "Ver producto" }).click();
+
+  const selector = page.locator(".variant-select");
+
+  await expect(selector.locator("option").nth(0)).toBeDisabled();
+  await expect(selector.locator("option").nth(1)).toBeEnabled();
+  await expect(selector).toHaveValue("1");
+
+  await expect(page.locator(".detail-availability")).toContainText(
+    "Disponible para consultar",
+  );
+});
+
 test("Excluye productos con precios inválidos", async ({ page }) => {
   const productos = [
     {
