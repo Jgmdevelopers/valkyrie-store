@@ -1,8 +1,8 @@
 # Valkyrie Store — Contrato de datos del catálogo
 
-**Versión:** 1.0 (propuesta)  
-**Estado:** Pendiente de implementación y validación  
-**Formato:** JSON  
+**Versión:** 1.0 (propuesta)
+**Estado:** Pendiente de implementación y validación
+**Formato:** JSON
 **Archivo de producción:** `products.json`
 
 ## 1. Objetivo
