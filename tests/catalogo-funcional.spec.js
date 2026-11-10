@@ -19,6 +19,10 @@ const archivos = {
     "config/tienda.json",
     "application/json; charset=utf-8",
   ],
+  "/docs/borradores/productos-demo-completos.json": [
+    "docs/borradores/productos-demo-completos.json",
+    "application/json; charset=utf-8",
+  ],
 };
 
 const imagenesDemo = [
@@ -772,4 +776,40 @@ test("Rechaza enlaces sociales inválidos", async ({ page }) => {
     "href",
     /.+/,
   );
+});
+
+test("El modo normal no muestra el aviso de demostración", async ({ page }) => {
+  await expect(page.locator("#demo-notice")).toBeHidden();
+
+  await expect(page.locator("#result-count")).toHaveText("3 productos");
+});
+
+test("El modo demostración carga cuatro productos y bloquea WhatsApp", async ({
+  page,
+}) => {
+  await page.goto(`${urlBase}/?demo=1`);
+
+  await expect(page.locator("#demo-notice")).toBeVisible();
+
+  await expect(page.locator("#demo-notice")).toContainText(
+    "Los precios, talles y cantidades son ilustrativos",
+  );
+
+  await expect(page.locator("#result-count")).toHaveText("4 productos");
+
+  await expect(page.locator("#product-grid .product")).toHaveCount(4);
+
+  const contactoGeneral = page.locator("#general-whatsapp");
+
+  await expect(contactoGeneral).not.toHaveAttribute("href");
+
+  const primerProducto = page.locator("#product-grid .product").first();
+
+  await primerProducto.getByRole("button", { name: "Ver producto" }).click();
+
+  const contactoProducto = page.locator("#detail-content .detail-actions a");
+
+  await expect(contactoProducto).toHaveAttribute("aria-disabled", "true");
+
+  await expect(contactoProducto).not.toHaveAttribute("href");
 });
