@@ -1,7 +1,7 @@
 # Valkyrie Store — Guía de carga de productos
 
-**Versión:** 1.0  
-**Destino:** Catálogo estático de Pamela  
+**Versión:** 1.0
+**Destino:** Catálogo estático de Pamela
 **Fuente de datos:** `products.json`
 
 ## Objetivo
