@@ -576,3 +576,64 @@ test("El catálogo funciona aunque falle la configuración comercial", async ({
     "true",
   );
 });
+
+test("Oculta las redes sociales sin configurar", async ({ page }) => {
+  await expect(page.locator("#redes-sociales")).toBeHidden();
+
+  await expect(page.locator("#link-instagram")).not.toHaveAttribute(
+    "href",
+    /.+/,
+  );
+
+  await expect(page.locator("#link-facebook")).not.toHaveAttribute(
+    "href",
+    /.+/,
+  );
+});
+
+test("Muestra redes sociales con direcciones válidas", async ({ page }) => {
+  await cargarConfiguracionDePrueba(page, {
+    moneda: "ARS",
+    whatsapp: "",
+    instagram: "https://www.instagram.com/valkyrie.ejemplo/",
+    facebook: "https://www.facebook.com/valkyrie.ejemplo/",
+  });
+
+  await expect(page.locator("#redes-sociales")).toBeVisible();
+
+  await expect(page.locator("#link-instagram")).toHaveAttribute(
+    "href",
+    "https://www.instagram.com/valkyrie.ejemplo/",
+  );
+
+  await expect(page.locator("#link-facebook")).toHaveAttribute(
+    "href",
+    "https://www.facebook.com/valkyrie.ejemplo/",
+  );
+
+  await expect(page.locator("#link-instagram")).toHaveAttribute(
+    "rel",
+    /noopener noreferrer/,
+  );
+});
+
+test("Rechaza enlaces sociales inválidos", async ({ page }) => {
+  await cargarConfiguracionDePrueba(page, {
+    moneda: "ARS",
+    whatsapp: "",
+    instagram: "https://www.instagram.com.ejemplo.com/perfil",
+    facebook: "javascript:alert(1)",
+  });
+
+  await expect(page.locator("#redes-sociales")).toBeHidden();
+
+  await expect(page.locator("#link-instagram")).not.toHaveAttribute(
+    "href",
+    /.+/,
+  );
+
+  await expect(page.locator("#link-facebook")).not.toHaveAttribute(
+    "href",
+    /.+/,
+  );
+});

@@ -309,6 +309,59 @@ if (WHATSAPP) {
     "Te respondemos por WhatsApp.";
 }
 
+function validarRedSocial(valor, dominio) {
+  if (typeof valor !== "string" || !valor.trim()) {
+    return "";
+  }
+
+  try {
+    const url = new URL(valor);
+
+    if (
+      url.protocol !== "https:" ||
+      url.hostname !== dominio ||
+      url.username ||
+      url.password ||
+      !url.pathname.replaceAll("/", "")
+    ) {
+      return "";
+    }
+
+    return url.href;
+  } catch {
+    return "";
+  }
+}
+
+function configurarRedesSociales(datos) {
+  const redes = [
+    {
+      id: "link-instagram",
+      url: validarRedSocial(datos?.instagram, "www.instagram.com"),
+    },
+    {
+      id: "link-facebook",
+      url: validarRedSocial(datos?.facebook, "www.facebook.com"),
+    },
+  ];
+
+  let visibles = 0;
+
+  redes.forEach(({ id, url }) => {
+    const enlace = document.getElementById(id);
+
+    enlace.hidden = !url;
+    enlace.removeAttribute("href");
+
+    if (url) {
+      enlace.href = url;
+      visibles++;
+    }
+  });
+
+  document.getElementById("redes-sociales").hidden = visibles === 0;
+}
+
 async function cargarConfiguracion() {
   try {
     const respuesta = await fetch("config/tienda.json");
@@ -340,7 +393,9 @@ async function cargarConfiguracion() {
 }
 
 async function iniciarTienda() {
-  await cargarConfiguracion();
+  const configuracion = await cargarConfiguracion();
+
+  configurarRedesSociales(configuracion);
 
   if (WHATSAPP) {
     const anchor = document.getElementById("general-whatsapp");

@@ -455,6 +455,47 @@ input:focus-visible {
   color: #aaaaaa;
   margin-top: 16px;
 }
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.social-links[hidden],
+.social-link[hidden] {
+  display: none;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 20px;
+  border: 1px solid #666;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.social-link:hover {
+  border-color: #fff;
+  background: #ffffff12;
+}
+
+.social-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
 .disabled-link {
   opacity: 0.65;
   pointer-events: none;
