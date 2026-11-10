@@ -401,26 +401,47 @@ async function cargarConfiguracion() {
   }
 }
 
+const MODO_DEMO =
+  new URLSearchParams(window.location.search).get("demo") === "1";
+
+const ARCHIVO_CATALOGO = MODO_DEMO
+  ? "docs/borradores/productos-demo-completos.json"
+  : "products.json";
+
 async function iniciarTienda() {
   const configuracion = await cargarConfiguracion();
 
   configurarRedesSociales(configuracion);
 
-  if (WHATSAPP) {
-    const anchor = document.getElementById("general-whatsapp");
+  const contactoGeneral = document.getElementById("general-whatsapp");
 
-    anchor.href = whatsappLink();
-    anchor.textContent = "Consultar por WhatsApp ↗";
-    anchor.classList.remove("disabled-link");
-    anchor.removeAttribute("aria-disabled");
-    anchor.target = "_blank";
-    anchor.rel = "noopener noreferrer";
+  if (MODO_DEMO) {
+    document.getElementById("demo-notice").hidden = false;
+
+    // La demostración nunca permite consultas comerciales.
+    WHATSAPP = "";
+
+    contactoGeneral.removeAttribute("href");
+    contactoGeneral.removeAttribute("target");
+    contactoGeneral.removeAttribute("rel");
+    contactoGeneral.setAttribute("aria-disabled", "true");
+    contactoGeneral.classList.add("disabled-link");
+    contactoGeneral.textContent = "Consultas deshabilitadas en demostración";
+  }
+
+  if (WHATSAPP && !MODO_DEMO) {
+    contactoGeneral.href = whatsappLink();
+    contactoGeneral.textContent = "Consultar por WhatsApp ↗";
+    contactoGeneral.classList.remove("disabled-link");
+    contactoGeneral.removeAttribute("aria-disabled");
+    contactoGeneral.target = "_blank";
+    contactoGeneral.rel = "noopener noreferrer";
 
     document.getElementById("contact-note").textContent =
       "Te respondemos por WhatsApp.";
   }
 
-  fetch("products.json")
+  fetch(ARCHIVO_CATALOGO)
     .then((respuesta) => {
       if (!respuesta.ok) {
         throw new Error("No se pudo obtener el catálogo");
@@ -448,8 +469,7 @@ async function iniciarTienda() {
     .catch((error) => {
       console.error("Error al cargar el catálogo:", error.message);
 
-      count.textContent =
-        "No se pudo cargar el catálogo. Revisá el servidor local y products.json.";
+      count.textContent = `No se pudo cargar el catálogo. Revisá el archivo ${ARCHIVO_CATALOGO}.`;
     });
 }
 

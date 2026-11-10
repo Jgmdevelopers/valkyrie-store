@@ -1,0 +1,22 @@
+[
+    {
+        "id": "remera-001",
+        "nombre": "Remera estampada",
+        "categoria": "Ropa nueva",
+        "descripcion": "Descripción del producto.",
+        "precio": null,
+        "imagen": "",
+        "disponible": true,
+        "destacado": false,
+        "variantes": [
+            {
+                "nombre": "Negro / M",
+                "stock": 0
+            },
+            {
+                "nombre": "Negro / L",
+                "stock": 0
+            }
+        ]
+    }
+]
